@@ -19,6 +19,14 @@ const Header = () => {
       }
     }
   }
+  const checkKaikasStatus = async () => {
+    const enabled = klaytnProvider._kaikas.isEnabled()
+    console.log('enabled: ', enabled)
+    const approved = await klaytnProvider._kaikas.isApproved()
+    console.log('approved: ', approved)
+    const unlocked = await klaytnProvider._kaikas.isUnlocked()
+    console.log('unlocked: ', unlocked)
+  }
 
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
@@ -27,7 +35,10 @@ const Header = () => {
       klaytnProvider.on('networkChanged', function () {
         detectNetwork()
       })
-      detectNetwork()
+      if (!network) {
+        detectNetwork()
+      }
+      checkKaikasStatus()
     }
   }, [ethProvider, klaytnProvider])
 
