@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
+import Caver from 'caver-js'
+import Web3 from 'web3'
+import fs from 'fs'
 
 const networks = ['Baobab', 'Cypress']
 
@@ -9,6 +12,8 @@ const Header = () => {
   const { klaytnProvider, ethProvider } = useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
+  const [metamaskBalance, setMetamaskBalace] = useState<string>()
+  const [kaikasBalance, setKaikasBalance] = useState()
 
   const detectNetwork = () => {
     if (klaytnProvider) {
@@ -75,6 +80,27 @@ const Header = () => {
     }
   }
 
+  //   const getKaikasBalance = async () => {
+  //     const caver = new Caver(klaytnProvider)
+  //     const account = klaytnProvider.selectedAddress
+  //     const balance = await caver.klay.getBalance(account)
+  //     console.log('balance: ', balance)
+  //   }
+
+  const getMetamaskBalance = async () => {
+    let web3 = new Web3(ethProvider)
+    const account = await ethereum.request({ method: 'eth_accounts' })
+    console.log('account: ', account)
+    const balance = await window.ethereum.request({
+      method: 'eth_getBalance',
+      params: [account[0], 'latest'],
+    })
+    const wei = web3.utils.hexToNumberString(balance)
+    const ether = web3.utils.fromWei(wei, 'ether')
+    console.log('balance: ', ether)
+    setMetamaskBalace(ether)
+  }
+
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
       if (!network) {
@@ -83,6 +109,8 @@ const Header = () => {
       klaytnProvider.on('networkChanged', function () {
         detectNetwork()
       })
+      //   getKaikasBalance()
+      getMetamaskBalance()
     }
   }, [ethProvider, klaytnProvider])
 
@@ -101,6 +129,7 @@ const Header = () => {
       </ul>
       <ul className="flex items-right">
         <div className="flex justify-center items-center">
+          <div className="mx-6">{metamaskBalance} KLAY</div>
           <div className="xl:w-84">
             <select
               className="form-select block w-full px-2 py-2 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"

@@ -21,8 +21,8 @@ const WalletModal = (props: ModalProps) => {
 
   const connectMetamask = async () => {
     try {
-      const connection = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      console.log('connection: ', connection)
+      const account = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      //   console.log('account: ', account)
     } catch (error: any) {
       console.error(error.message)
     }
@@ -62,7 +62,10 @@ const WalletModal = (props: ModalProps) => {
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-1/2 max-w-md p-6 my-12 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title as="h3" className="text-3xl font-medium leading-6 text-gray-900">
+                <Dialog.Title
+                  as="h3"
+                  className="text-3xl font-medium leading-6 text-gray-900 flex justify-center"
+                >
                   Select Wallet
                 </Dialog.Title>
                 <div className="grid grid-cols-2 p-6">
