@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
+import { ChevronDownIcon } from '@heroicons/react/outline'
+
+const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
   const { klaytnProvider, ethProvider } = useContext(providerContext)
@@ -11,7 +14,6 @@ const Header = () => {
   const detectNetwork = () => {
     if (klaytnProvider) {
       const networkId = klaytnProvider.networkVersion
-      console.log('network id:', networkId)
       if (networkId === 1001) {
         setNetwork('Baobab')
       } else if (networkId === 8217) {
@@ -19,26 +21,15 @@ const Header = () => {
       }
     }
   }
-  const checkKaikasStatus = async () => {
-    const enabled = klaytnProvider._kaikas.isEnabled()
-    console.log('enabled: ', enabled)
-    const approved = await klaytnProvider._kaikas.isApproved()
-    console.log('approved: ', approved)
-    const unlocked = await klaytnProvider._kaikas.isUnlocked()
-    console.log('unlocked: ', unlocked)
-  }
 
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
-      console.log('eth provider:', ethProvider)
-      console.log('klay provider:', klaytnProvider)
-      klaytnProvider.on('networkChanged', function () {
-        detectNetwork()
-      })
       if (!network) {
         detectNetwork()
       }
-      checkKaikasStatus()
+      klaytnProvider.on('networkChanged', function () {
+        detectNetwork()
+      })
     }
   }, [ethProvider, klaytnProvider])
 
@@ -57,8 +48,20 @@ const Header = () => {
       </ul>
       <ul className="flex items-right">
         <div className="flex justify-center items-center">
-          <span>{network}</span>
-          <li className="mx-10">
+          <div className="xl:w-84">
+            <select
+              className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
+              aria-label="Default select example"
+              value={network}
+              onChange={(e: any) => setNetwork(e.target.value)}
+            >
+              {networks.map((env) => (
+                <option key={env}>{env}</option>
+              ))}
+              <ChevronDownIcon className="w-6 h-6 ml-2 cursor-pointer" stroke="grey" />
+            </select>
+          </div>
+          <li className="mx-8">
             <button
               className="rounded-full bg-blue-600 p-3 text-white"
               onClick={() => setWalletModal(true)}
