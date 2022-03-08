@@ -7,6 +7,7 @@ import kaikas from '../public/kaikas.jpeg'
 interface ModalProps {
   walletModal: boolean
   setWalletModal: (a: boolean) => void
+  setMetamaskConnected: (a: boolean) => void
 }
 
 const WalletModal = (props: ModalProps) => {
@@ -23,6 +24,8 @@ const WalletModal = (props: ModalProps) => {
     try {
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' })
       //   console.log('account: ', account)
+      props.setMetamaskConnected(true)
+      props.setWalletModal(false)
     } catch (error: any) {
       console.error(error.message)
     }

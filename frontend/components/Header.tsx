@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
-import { SwitchHorizontalIcon } from '@heroicons/react/outline'
+import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
 import Web3 from 'web3'
 import Caver from 'caver-js'
 import fs from 'fs'
@@ -15,6 +15,8 @@ const Header = () => {
   const [network, setNetwork] = useState<any>()
   const [metamaskBalance, setMetamaskBalace] = useState<string>()
   const [kaikasBalance, setKaikasBalance] = useState()
+  const [metamaskConnected, setMetamaskConnected] = useState<boolean>(false)
+  const [metamaskAddress, setMetamaskAddress] = useState<any>('')
 
   const detectNetwork = () => {
     if (klaytnProvider) {
@@ -81,16 +83,27 @@ const Header = () => {
     }
   }
 
+  const initWallet = async () => {
+    const account = await ethereum.request({ method: 'eth_accounts' })
+    setMetamaskAddress(account[0])
+    const status = ethereum.isConnected()
+    setMetamaskConnected(status)
+  }
+
   const getMetamaskBalance = async () => {
     let web3 = new Web3(ethProvider)
-    const account = await ethereum.request({ method: 'eth_accounts' })
     const balance = await window.ethereum.request({
       method: 'eth_getBalance',
-      params: [account[0], 'latest'],
+      params: [metamaskAddress, 'latest'],
     })
-    const wei = web3.utils.hexToNumberString(balance)
-    const ether = web3.utils.fromWei(wei, 'ether')
-    setMetamaskBalace(ether)
+    console.log('balance: ', balance)
+    if (balance) {
+      const wei = web3.utils.hexToNumberString(balance)
+      const ether = web3.utils.fromWei(wei, 'ether')
+      setMetamaskBalace(ether)
+    } else {
+      console.log('no blaance')
+    }
   }
 
   //   const getKaikasBalance = async () => {
@@ -100,23 +113,40 @@ const Header = () => {
   //     console.log('balance: ', balance)
   //   }
 
+  const shortenAddress = (str: any) => {
+    return str.substring(0, 5) + '...' + str.substring(str.length - 2)
+  }
+
   useEffect(() => {
-    if (ethProvider && klaytnProvider) {
+    initWallet()
+  }, [metamaskConnected])
+
+  useEffect(() => {
+    if (ethProvider && metamaskAddress) {
+      getMetamaskBalance()
+    }
+  }, [ethProvider, metamaskAddress, metamaskConnected])
+
+  useEffect(() => {
+    if (klaytnProvider) {
       if (!network) {
         detectNetwork()
       }
       klaytnProvider.on('networkChanged', function () {
         detectNetwork()
       })
-      getMetamaskBalance()
       // getKaikasBalance()
     }
-  }, [ethProvider, klaytnProvider])
+  }, [klaytnProvider])
 
   return (
     <header className="grid grid-rows-2">
       <div className="flex place-content-between p-2 items-center text-gray-900 bg-gray-100 mt-2">
-        <WalletModal walletModal={walletModal} setWalletModal={setWalletModal} />
+        <WalletModal
+          walletModal={walletModal}
+          setWalletModal={setWalletModal}
+          setMetamaskConnected={setMetamaskConnected}
+        />
         <Link href="/">
           <a className="mx-10">Klaytn Kit</a>
         </Link>
@@ -140,13 +170,20 @@ const Header = () => {
                 ))}
               </select>
             </div>
-            <li className="mx-8">
-              <button
-                className="rounded-full bg-blue-600 px-3 py-2 text-white"
-                onClick={() => setWalletModal(true)}
-              >
-                Connect
-              </button>
+            <li className="mx-6">
+              {metamaskConnected && metamaskAddress ? (
+                <button className="flex items-center rounded-full bg-blue-600 px-2  text-white">
+                  {shortenAddress(metamaskAddress)}
+                  <DocumentDuplicateIcon className="w-5 h-10 ml-2 text-white cursor-pointer" />
+                </button>
+              ) : (
+                <button
+                  className="rounded-full bg-blue-600 px-3 py-2 text-white"
+                  onClick={() => setWalletModal(true)}
+                >
+                  Connect
+                </button>
+              )}
             </li>
           </div>
         </ul>
