@@ -147,10 +147,15 @@ const Header = () => {
         </ul>
       </div>
       <div className="flex place-content-center items-center text-gray-900 bg-gray-100 shadow">
-        <ul>
-          <li className="mx-10 hover:text-blue-600 hover:underline hover:underline-offset-4 focus:bg-red-500 ">
+        <ul className="flex">
+          <li className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 pb-2 border-b-2 border-gray-100 focus:bg-red-500 ">
             <Link href="/dashboard">
               <a>Dashboard</a>
+            </Link>
+          </li>
+          <li className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 pb-2 border-b-2 border-gray-100 focus:bg-red-500 ">
+            <Link href="/transfers">
+              <a>Transfers</a>
             </Link>
           </li>
         </ul>
