@@ -4,14 +4,6 @@ import WalletModal from './WalletModal'
 
 const Header = () => {
   const [walletModal, setWalletModal] = useState<boolean>(false)
-  const connectKaikas = async () => {
-    try {
-      const accounts = await klaytn.enable()
-      console.log('network: ', klatyn.networkVersion)
-    } catch (error: any) {
-      console.error(error.message)
-    }
-  }
 
   return (
     <header className="flex place-content-between p-6 text-gray-900 bg-gray-100 shadow shadow-md">

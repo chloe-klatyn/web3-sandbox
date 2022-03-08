@@ -1,5 +1,8 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import Image from 'next/image'
+import metamask from '../public/metamask.png'
+import kaikas from '../public/kaikas.jpeg'
 
 interface ModalProps {
   walletModal: boolean
@@ -7,6 +10,24 @@ interface ModalProps {
 }
 
 const WalletModal = (props: ModalProps) => {
+  const connectKaikas = async () => {
+    try {
+      const accounts = await window.klaytn.enable()
+      console.log('accounts: ', accounts)
+    } catch (error: any) {
+      console.error(error.message)
+    }
+  }
+
+  const connectMetamask = async () => {
+    try {
+      const connection = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      console.log('connection: ', connection)
+    } catch (error: any) {
+      console.error(error.message)
+    }
+  }
+
   return (
     <>
       <Transition appear show={props.walletModal} as={Fragment}>
@@ -40,29 +61,29 @@ const WalletModal = (props: ModalProps) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-1/2 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block w-1/2 max-w-md p-6 my-12 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title as="h3" className="text-3xl font-medium leading-6 text-gray-900">
-                  Delete Confirmation
+                  Select Wallet
                 </Dialog.Title>
-                <div className="mt-3">
-                  <p className="block md:text-sm font-2xl text-slate-600">
-                    Click Confirm to delete
-                  </p>
-                </div>
-                <div className="mt-4 space-x-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-slate-900 bg-slate-200 border border-transparent rounded-md hover:bg-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={() => props.setWalletModal(false)}
+                <div className="grid grid-cols-2 p-6">
+                  <div
+                    className="hover:bg-blue-100 cursor-pointer p-4 rounded-md flex justify-center"
+                    onClick={connectKaikas}
                   >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-white font-medium bg-red-500 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    <div>
+                      <Image src={kaikas} width="100px" height="100px" />
+                      <p className="text-center text-xl">Kaikas</p>
+                    </div>
+                  </div>
+                  <div
+                    className="hover:bg-blue-100 cursor-pointer p-4 rounded-md flex justify-center"
+                    onClick={connectMetamask}
                   >
-                    Confirm
-                  </button>
+                    <div>
+                      <Image src={metamask} width="100px" height="100px" />
+                      <p className="text-center text-xl">Metamask</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Transition.Child>

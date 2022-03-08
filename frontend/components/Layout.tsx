@@ -7,6 +7,7 @@ const Layout = ({ children }: { children: any }) => {
   useEffect(() => {
     if (typeof window.klaytn !== 'undefined') {
       const provider = window['klaytn']
+      console.log('provider: ', provider)
     }
     if (typeof window.ethereum !== 'undefined') {
       const provider = window.ethereum
