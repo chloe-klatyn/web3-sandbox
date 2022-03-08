@@ -1,7 +1,16 @@
-import type { NextPage } from "next";
+import type { NextPage } from 'next'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
-  return <div className="flex justify-center">hello world</div>;
-};
+  useEffect(() => {
+    if (typeof window.klaytn !== 'undefined') {
+      const provider = window['klaytn']
+    } else {
+      console.log('please install kaikas')
+    }
+  }, [])
 
-export default Home;
+  return <div className="flex justify-center">hello world</div>
+}
+
+export default Home
