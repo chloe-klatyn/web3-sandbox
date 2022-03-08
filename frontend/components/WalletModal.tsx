@@ -67,7 +67,7 @@ const WalletModal = (props: ModalProps) => {
                 </Dialog.Title>
                 <div className="grid grid-cols-2 p-6">
                   <div
-                    className="hover:bg-blue-100 cursor-pointer p-4 rounded-md flex justify-center"
+                    className="hover:border-2 hover:border-slate-200 border-2 border-white cursor-pointer p-4 rounded-md flex justify-center"
                     onClick={connectKaikas}
                   >
                     <div>
@@ -76,7 +76,7 @@ const WalletModal = (props: ModalProps) => {
                     </div>
                   </div>
                   <div
-                    className="hover:bg-blue-100 cursor-pointer p-4 rounded-md flex justify-center"
+                    className="hover:border-2 hover:border-slate-200 border-2 border-white cursor-pointer p-4 rounded-md flex justify-center"
                     onClick={connectMetamask}
                   >
                     <div>

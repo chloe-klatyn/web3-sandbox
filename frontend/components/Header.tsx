@@ -2,14 +2,13 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
-import { ChevronDownIcon } from '@heroicons/react/outline'
 
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
   const { klaytnProvider, ethProvider } = useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
-  const [network, setNetwork] = useState()
+  const [network, setNetwork] = useState<any>()
 
   const detectNetwork = () => {
     if (klaytnProvider) {
@@ -73,8 +72,6 @@ const Header = () => {
           }
         }
       }
-    } else {
-      console.log('not handled')
     }
   }
 
@@ -115,7 +112,6 @@ const Header = () => {
                 <option key={env}>{env}</option>
               ))}
             </select>
-            {/* <ChevronDownIcon className="w-6 h-6 ml-2 cursor-pointer" stroke="grey" /> */}
           </div>
           <li className="mx-8">
             <button
