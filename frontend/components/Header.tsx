@@ -2,8 +2,9 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
-import Caver from 'caver-js'
+import { SwitchHorizontalIcon } from '@heroicons/react/outline'
 import Web3 from 'web3'
+import Caver from 'caver-js'
 import fs from 'fs'
 
 const networks = ['Baobab', 'Cypress']
@@ -114,15 +115,19 @@ const Header = () => {
 
   return (
     <header className="grid grid-rows-2">
-      <div className="flex place-content-between p-2 items-center text-gray-900 bg-gray-100">
+      <div className="flex place-content-between p-2 items-center text-gray-900 bg-gray-100 mt-2">
         <WalletModal walletModal={walletModal} setWalletModal={setWalletModal} />
         <Link href="/">
           <a className="mx-10">Klaytn Kit</a>
         </Link>
-
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
-            <div className="mx-6">{metamaskBalance} KLAY</div>
+            <div className="mx-6 flex">
+              {metamaskBalance} KLAY
+              <Link href="/transfers">
+                <SwitchHorizontalIcon className="w-5 h-5 ml-2 text-slate-700 cursor-pointer" />
+              </Link>
+            </div>
             <div className="xl:w-84">
               <select
                 className="form-select block w-full px-2 py-2 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
