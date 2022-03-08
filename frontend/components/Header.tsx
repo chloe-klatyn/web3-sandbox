@@ -1,9 +1,21 @@
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
+import providerContext from '../context/context'
 
 const Header = () => {
+  const { klaytnProvider, ethProvider } = useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
+  const [network, setNetwork] = useState()
+
+  useEffect(() => {}, [])
+
+  useEffect(() => {
+    if (ethProvider && klaytnProvider) {
+      console.log('eth provider:', ethProvider)
+      console.log('klay provider:', klaytnProvider)
+    }
+  }, [ethProvider, klaytnProvider])
 
   return (
     <header className="flex place-content-between p-6  items-center text-gray-900 bg-gray-100 shadow shadow-md">
@@ -22,7 +34,7 @@ const Header = () => {
         <div className="flex justify-center">
           <li className="mx-10">
             <button
-              className="rounded-lg bg-blue-600 p-3 text-white"
+              className="rounded-full bg-blue-600 p-3 text-white"
               onClick={() => setWalletModal(true)}
             >
               Connect Wallet

@@ -5,17 +5,16 @@ import { useEffect, useContext } from 'react'
 import providerContext from '../context/context'
 
 const Layout = ({ children }: { children: any }) => {
-  const context = useContext(providerContext)
-  console.log('context: ', context)
+  const { setKlaytnProvider, setEthProvider } = useContext(providerContext)
 
   useEffect(() => {
     if (typeof window.klaytn !== 'undefined') {
       const provider = window['klaytn']
-      console.log('klay provider: ', provider)
+      setKlaytnProvider(provider)
     }
     if (typeof window.ethereum !== 'undefined') {
       const provider = window.ethereum
-      console.log('eth provider: ', provider)
+      setEthProvider(provider)
     }
   }, [])
 

@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
 import Head from 'next/head'
 import GlobalContext from '../context/context'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [klaytnProvider, setKlaytnProvider] = useState()
