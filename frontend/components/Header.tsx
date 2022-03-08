@@ -114,7 +114,7 @@ const Header = () => {
 
   return (
     <header className="grid grid-rows-2">
-      <div className="flex place-content-between p-3 items-center text-gray-900 bg-gray-100">
+      <div className="flex place-content-between p-2 items-center text-gray-900 bg-gray-100">
         <WalletModal walletModal={walletModal} setWalletModal={setWalletModal} />
         <Link href="/">
           <a className="mx-10">Klaytn Kit</a>
@@ -147,18 +147,18 @@ const Header = () => {
         </ul>
       </div>
       <div className="flex place-content-center items-center text-gray-900 bg-gray-100 shadow">
-        <ul className="flex">
-          <li className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 pb-2 border-b-2 border-gray-100 focus:bg-red-500 ">
-            <Link href="/dashboard">
-              <a>Dashboard</a>
-            </Link>
-          </li>
-          <li className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 pb-2 border-b-2 border-gray-100 focus:bg-red-500 ">
-            <Link href="/transfers">
-              <a>Transfers</a>
-            </Link>
-          </li>
-        </ul>
+        <div className="flex">
+          <Link href="/dashboard">
+            <button className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
+              Dashboard
+            </button>
+          </Link>
+          <Link href="/transfers">
+            <button className="mx-10 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
+              Transfers
+            </button>
+          </Link>
+        </div>
       </div>
     </header>
   )
