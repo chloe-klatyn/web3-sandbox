@@ -8,7 +8,7 @@ const Header = () => {
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState()
 
-  useEffect(() => {
+  const detectNetwork = () => {
     if (klaytnProvider) {
       const networkId = klaytnProvider.networkVersion
       console.log('network id:', networkId)
@@ -18,12 +18,16 @@ const Header = () => {
         setNetwork('Cypress')
       }
     }
-  }, [klaytnProvider])
+  }
 
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
       console.log('eth provider:', ethProvider)
       console.log('klay provider:', klaytnProvider)
+      klaytnProvider.on('networkChanged', function () {
+        detectNetwork()
+      })
+      detectNetwork()
     }
   }, [ethProvider, klaytnProvider])
 
