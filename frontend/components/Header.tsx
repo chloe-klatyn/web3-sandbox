@@ -6,7 +6,7 @@ const Header = () => {
   const [walletModal, setWalletModal] = useState<boolean>(false)
 
   return (
-    <header className="flex place-content-between p-6 text-gray-900 bg-gray-100 shadow shadow-md">
+    <header className="flex place-content-between p-6  items-center text-gray-900 bg-gray-100 shadow shadow-md">
       <WalletModal walletModal={walletModal} setWalletModal={setWalletModal} />
       <Link href="/">
         <a className="mx-10">Klaytn Kit</a>
@@ -21,7 +21,12 @@ const Header = () => {
       <ul className="flex items-right">
         <div className="flex justify-center">
           <li className="mx-10">
-            <button onClick={() => setWalletModal(true)}>Connect Wallet</button>
+            <button
+              className="rounded-lg bg-blue-600 p-3 text-white"
+              onClick={() => setWalletModal(true)}
+            >
+              Connect Wallet
+            </button>
           </li>
         </div>
       </ul>

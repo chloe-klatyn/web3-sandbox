@@ -1,17 +1,21 @@
 import Header from './Header'
 import Footer from './Footer'
 import 'tailwindcss/tailwind.css'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import providerContext from '../context/context'
 
 const Layout = ({ children }: { children: any }) => {
+  const context = useContext(providerContext)
+  console.log('context: ', context)
+
   useEffect(() => {
     if (typeof window.klaytn !== 'undefined') {
       const provider = window['klaytn']
-      console.log('provider: ', provider)
+      console.log('klay provider: ', provider)
     }
     if (typeof window.ethereum !== 'undefined') {
       const provider = window.ethereum
-      console.log('provider: ', provider)
+      console.log('eth provider: ', provider)
     }
   }, [])
 
