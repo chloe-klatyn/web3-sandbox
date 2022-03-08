@@ -5,7 +5,7 @@ const Footer = () => {
         © Klaytn 2022
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

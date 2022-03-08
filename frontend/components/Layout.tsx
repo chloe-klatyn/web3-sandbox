@@ -1,6 +1,6 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import "tailwindcss/tailwind.css";
+import Header from './Header'
+import Footer from './Footer'
+import 'tailwindcss/tailwind.css'
 
 const Layout = ({ children }: { children: any }) => {
   return (
@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: any }) => {
       <main>{children}</main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
