@@ -8,7 +8,17 @@ const Header = () => {
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState()
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    if (klaytnProvider) {
+      const networkId = klaytnProvider.networkVersion
+      console.log('network id:', networkId)
+      if (networkId === 1001) {
+        setNetwork('Baobab')
+      } else if (networkId === 8217) {
+        setNetwork('Cypress')
+      }
+    }
+  }, [klaytnProvider])
 
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
@@ -18,7 +28,7 @@ const Header = () => {
   }, [ethProvider, klaytnProvider])
 
   return (
-    <header className="flex place-content-between p-6  items-center text-gray-900 bg-gray-100 shadow shadow-md">
+    <header className="flex place-content-between p-6 items-center text-gray-900 bg-gray-100 shadow shadow-md">
       <WalletModal walletModal={walletModal} setWalletModal={setWalletModal} />
       <Link href="/">
         <a className="mx-10">Klaytn Kit</a>
@@ -31,7 +41,8 @@ const Header = () => {
         </li>
       </ul>
       <ul className="flex items-right">
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center">
+          <span>{network}</span>
           <li className="mx-10">
             <button
               className="rounded-full bg-blue-600 p-3 text-white"
