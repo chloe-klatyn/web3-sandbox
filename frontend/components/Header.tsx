@@ -22,6 +22,62 @@ const Header = () => {
     }
   }
 
+  const changeNetwork = async (e: any) => {
+    const selected = e.target.value
+    setNetwork(selected)
+    if (selected === 'Cypress') {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x2019' }],
+        })
+      } catch (err: any) {
+        if (err.code === 4902) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x2019',
+                  chainName: 'Klaytn Cypress',
+                  rpcUrls: ['https://public-node-api.klaytnapi.com/v1/cypress'],
+                },
+              ],
+            })
+          } catch (addError) {
+            console.error(addError)
+          }
+        }
+      }
+    } else if (selected === 'Baobab') {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x3e9' }],
+        })
+      } catch (err: any) {
+        if (err.code === 4902) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x3e9',
+                  chainName: 'Klaytn Baobab',
+                  rpcUrls: ['https://public-node-api.klaytnapi.com/v1/baobab'],
+                },
+              ],
+            })
+          } catch (addError) {
+            console.error(addError)
+          }
+        }
+      }
+    } else {
+      console.log('not handled')
+    }
+  }
+
   useEffect(() => {
     if (ethProvider && klaytnProvider) {
       if (!network) {
@@ -50,23 +106,23 @@ const Header = () => {
         <div className="flex justify-center items-center">
           <div className="xl:w-84">
             <select
-              className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
+              className="form-select block w-full px-2 py-2 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
               aria-label="Default select example"
               value={network}
-              onChange={(e: any) => setNetwork(e.target.value)}
+              onChange={changeNetwork}
             >
               {networks.map((env) => (
                 <option key={env}>{env}</option>
               ))}
-              <ChevronDownIcon className="w-6 h-6 ml-2 cursor-pointer" stroke="grey" />
             </select>
+            {/* <ChevronDownIcon className="w-6 h-6 ml-2 cursor-pointer" stroke="grey" /> */}
           </div>
           <li className="mx-8">
             <button
-              className="rounded-full bg-blue-600 p-3 text-white"
+              className="rounded-full bg-blue-600 px-3 py-2 text-white"
               onClick={() => setWalletModal(true)}
             >
-              Connect Wallet
+              Connect
             </button>
           </li>
         </div>

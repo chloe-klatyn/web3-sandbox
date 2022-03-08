@@ -10,21 +10,23 @@ const Layout = ({ children }: { children: any }) => {
 
   const checkKaikasStatus = async () => {
     const enabled = klaytnProvider._kaikas.isEnabled()
-    console.log('enabled: ', enabled)
     const approved = await klaytnProvider._kaikas.isApproved()
-    console.log('approved: ', approved)
     const unlocked = await klaytnProvider._kaikas.isUnlocked()
-    console.log('unlocked: ', unlocked)
+    // console.log('enabled: ', enabled)
+    // console.log('approved: ', approved)
+    // console.log('unlocked: ', unlocked)
   }
 
   useEffect(() => {
     if (typeof window.klaytn !== 'undefined') {
       const provider = window['klaytn']
       setKlaytnProvider(provider)
+      console.log('klay provider:', provider)
     }
     if (typeof window.ethereum !== 'undefined') {
       const provider = window.ethereum
       setEthProvider(provider)
+      console.log('eth provider:', provider)
     }
   }, [])
 
