@@ -8,7 +8,7 @@ type FormData = {
 }
 
 const Transfer = () => {
-  const { web3, metamaskAddress } = useContext(providerContext)
+  const { web3, ethProvider, metamaskAddress } = useContext(providerContext)
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
 
   const {
@@ -25,7 +25,7 @@ const Transfer = () => {
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
       console.log('value: ', value)
-      const txn = await window.ethereum.request({
+      const txn = await ethProvider.request({
         method: 'eth_sendTransaction',
         params: [
           {
@@ -45,7 +45,7 @@ const Transfer = () => {
   }
 
   const getMetamaskBalance = async () => {
-    const balance = await window.ethereum.request({
+    const balance = await ethProvider.request({
       method: 'eth_getBalance',
       params: [metamaskAddress, 'latest'],
     })
@@ -75,7 +75,7 @@ const Transfer = () => {
   }
 
   const validateValue = (input: any) => {
-    if (input > metamaskBalance) {
+    if (metamaskBalance && input > metamaskBalance) {
       return false
     } else {
       return true
