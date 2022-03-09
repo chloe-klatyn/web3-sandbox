@@ -33,14 +33,14 @@ const Header = () => {
     setNetwork(selected)
     if (selected === 'Cypress') {
       try {
-        await window.ethereum.request({
+        await ethProvider.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x2019' }],
         })
       } catch (err: any) {
         if (err.code === 4902) {
           try {
-            await ethereum.request({
+            await ethProvider.request({
               method: 'wallet_addEthereumChain',
               params: [
                 {
@@ -57,14 +57,14 @@ const Header = () => {
       }
     } else if (selected === 'Baobab') {
       try {
-        await window.ethereum.request({
+        await ethProvider.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x3e9' }],
         })
       } catch (err: any) {
         if (err.code === 4902) {
           try {
-            await ethereum.request({
+            await ethProvider.request({
               method: 'wallet_addEthereumChain',
               params: [
                 {
@@ -83,16 +83,16 @@ const Header = () => {
   }
 
   const initWallet = async () => {
-    const account = await ethereum.request({ method: 'eth_accounts' })
+    const account = await ethProvider.request({ method: 'eth_accounts' })
     setMetamaskAddress(account[0])
-    const status = ethereum.isConnected()
+    const status = ethProvider.isConnected()
     setMetamaskConnected(status)
     let web3 = new Web3(ethProvider)
     setWeb3(web3)
   }
 
   const getMetamaskBalance = async () => {
-    const balance = await window.ethereum.request({
+    const balance = await ethProvider.request({
       method: 'eth_getBalance',
       params: [metamaskAddress, 'latest'],
     })
@@ -116,9 +116,15 @@ const Header = () => {
     return str.substring(0, 5) + '...' + str.substring(str.length - 2)
   }
 
+  const shortenBalance = (str: any) => {
+    return Math.round(str * 10) / 10
+  }
+
   useEffect(() => {
-    initWallet()
-  }, [metamaskConnected])
+    if (ethProvider) {
+      initWallet()
+    }
+  }, [ethProvider, metamaskConnected])
 
   useEffect(() => {
     if (web3 && metamaskAddress) {
@@ -152,7 +158,7 @@ const Header = () => {
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
             <div className="mx-6 flex">
-              {metamaskBalance} KLAY
+              {metamaskBalance && shortenBalance(metamaskBalance)} KLAY
               <Link href="/transfers">
                 <SwitchHorizontalIcon className="w-5 h-5 ml-2 text-slate-700 cursor-pointer" />
               </Link>

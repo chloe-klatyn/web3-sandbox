@@ -109,6 +109,7 @@ const Transfer = () => {
           <input
             className="rounded-md shadow-sm block py-2 px-2 w-full border border-gray-200"
             type="number"
+            placeholder="KLAY"
             {...register('sendValue', { required: true, validate: validateValue })}
           />
           {errors.sendValue && errors.sendValue.type === 'validate' && (
