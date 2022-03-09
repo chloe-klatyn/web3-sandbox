@@ -50,7 +50,12 @@ const Transfer = () => {
         await sleep()
       }
       console.log('receipt: ', transactionReceipt)
-      toast.update(id, { render: 'Tokens sent successfully', type: 'success', isLoading: false })
+      toast.update(id, {
+        render: 'Tokens sent successfully',
+        type: 'success',
+        autoClose: 3000,
+        isLoading: false,
+      })
     } catch (err: any) {
       console.error(err)
       toast.error(err.message, { theme: 'colored' })
