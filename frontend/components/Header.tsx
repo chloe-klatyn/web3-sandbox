@@ -9,7 +9,7 @@ import Caver from 'caver-js'
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
-  const { klaytnProvider, ethProvider, metamaskAddress, setMetamaskAddress } =
+  const { web3, klaytnProvider, ethProvider, metamaskAddress, setMetamaskAddress, setWeb3 } =
     useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
@@ -87,15 +87,15 @@ const Header = () => {
     setMetamaskAddress(account[0])
     const status = ethereum.isConnected()
     setMetamaskConnected(status)
+    let web3 = new Web3(ethProvider)
+    setWeb3(web3)
   }
 
   const getMetamaskBalance = async () => {
-    let web3 = new Web3(ethProvider)
     const balance = await window.ethereum.request({
       method: 'eth_getBalance',
       params: [metamaskAddress, 'latest'],
     })
-    console.log('balance: ', balance)
     if (balance) {
       const wei = web3.utils.hexToNumberString(balance)
       const ether = web3.utils.fromWei(wei, 'ether')
@@ -121,10 +121,10 @@ const Header = () => {
   }, [metamaskConnected])
 
   useEffect(() => {
-    if (ethProvider && metamaskAddress) {
+    if (web3 && metamaskAddress) {
       getMetamaskBalance()
     }
-  }, [ethProvider, metamaskAddress, metamaskConnected])
+  }, [web3, metamaskAddress, metamaskConnected])
 
   useEffect(() => {
     if (klaytnProvider) {
