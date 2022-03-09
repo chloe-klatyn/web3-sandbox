@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 type FormData = {
   receivingAddress: string
@@ -19,12 +21,17 @@ const Transfer = () => {
     formState: { errors },
   } = useForm<FormData>()
 
+  const sleep = () => {
+    return new Promise((resolve) => setTimeout(resolve, 1000))
+  }
+
   const transferTokens = async () => {
     const sendValue = getValues('sendValue')
     const receiver = getValues('receivingAddress')
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
       console.log('value: ', value)
+      const id = toast.loading('Sending Tokens....', { theme: 'colored' })
       const txn = await ethProvider.request({
         method: 'eth_sendTransaction',
         params: [
@@ -37,10 +44,16 @@ const Transfer = () => {
           },
         ],
       })
-      const receipt = await txn.wait()
-      console.log('txn: ', receipt)
-    } catch (err) {
+      let transactionReceipt = null
+      while (transactionReceipt == null) {
+        transactionReceipt = await web3.eth.getTransactionReceipt(txn)
+        await sleep()
+      }
+      console.log('receipt: ', transactionReceipt)
+      toast.update(id, { render: 'Tokens sent successfully', type: 'success', isLoading: false })
+    } catch (err: any) {
       console.error(err)
+      toast.error(err.message, { theme: 'colored' })
     }
   }
 
@@ -90,6 +103,17 @@ const Transfer = () => {
 
   return (
     <div className="flex flex-col items-center w-full">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
           <span>{metamaskAddress && shortenAddress(metamaskAddress)}</span>

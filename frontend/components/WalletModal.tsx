@@ -5,7 +5,6 @@ import metamask from '../public/metamask.png'
 import providerContext from '../context/context'
 import { useEffect, useContext } from 'react'
 import kaikas from '../public/kaikas.jpeg'
-
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -32,10 +31,10 @@ const WalletModal = (props: ModalProps) => {
       //   console.log('account: ', account)
       props.setMetamaskConnected(true)
       props.setWalletModal(false)
-      toast.success('Wallet Connected')
+      toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)
-      toast.error(error.message)
+      toast.error(error.message, { theme: 'colored' })
     }
   }
 
@@ -43,7 +42,7 @@ const WalletModal = (props: ModalProps) => {
     <>
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={4000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick
