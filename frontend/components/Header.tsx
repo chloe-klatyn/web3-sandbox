@@ -5,7 +5,6 @@ import providerContext from '../context/context'
 import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
 import Web3 from 'web3'
 import Caver from 'caver-js'
-import fs from 'fs'
 
 const networks = ['Baobab', 'Cypress']
 
@@ -141,7 +140,7 @@ const Header = () => {
 
   return (
     <header className="grid grid-rows-2">
-      <div className="flex place-content-between p-2 items-center text-gray-900 bg-gray-100 mt-2">
+      <div className="flex place-content-between p-4 items-center text-gray-900 bg-gray-100">
         <WalletModal
           walletModal={walletModal}
           setWalletModal={setWalletModal}
@@ -172,9 +171,14 @@ const Header = () => {
             </div>
             <li className="mx-6">
               {metamaskConnected && metamaskAddress ? (
-                <button className="flex items-center rounded-full bg-blue-600 px-2  text-white">
+                <button className="flex items-center rounded-full bg-blue-600 px-2 text-white">
                   {shortenAddress(metamaskAddress)}
-                  <DocumentDuplicateIcon className="w-5 h-10 ml-2 text-white cursor-pointer" />
+                  <DocumentDuplicateIcon
+                    className="w-5 h-10 ml-2 text-white cursor-pointer active:text-emerald-400"
+                    onClick={() => {
+                      navigator.clipboard.writeText(metamaskAddress)
+                    }}
+                  />
                 </button>
               ) : (
                 <button
