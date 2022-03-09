@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import metamask from '../public/metamask.png'
+import providerContext from '../context/context'
+import { useEffect, useContext } from 'react'
 import kaikas from '../public/kaikas.jpeg'
 
 interface ModalProps {
@@ -11,9 +13,10 @@ interface ModalProps {
 }
 
 const WalletModal = (props: ModalProps) => {
+  const { ethProvider, klaytnProvider } = useContext(providerContext)
   const connectKaikas = async () => {
     try {
-      const accounts = await window.klaytn.enable()
+      const accounts = await klaytnProvider.enable()
       console.log('accounts: ', accounts)
     } catch (error: any) {
       console.error(error.message)
@@ -22,7 +25,7 @@ const WalletModal = (props: ModalProps) => {
 
   const connectMetamask = async () => {
     try {
-      const account = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const account = await ethProvider.request({ method: 'eth_requestAccounts' })
       //   console.log('account: ', account)
       props.setMetamaskConnected(true)
       props.setWalletModal(false)
