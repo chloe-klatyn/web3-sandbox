@@ -6,6 +6,9 @@ import providerContext from '../context/context'
 import { useEffect, useContext } from 'react'
 import kaikas from '../public/kaikas.jpeg'
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 interface ModalProps {
   walletModal: boolean
   setWalletModal: (a: boolean) => void
@@ -29,13 +32,26 @@ const WalletModal = (props: ModalProps) => {
       //   console.log('account: ', account)
       props.setMetamaskConnected(true)
       props.setWalletModal(false)
+      toast.success('Wallet Connected')
     } catch (error: any) {
       console.error(error.message)
+      toast.error(error.message)
     }
   }
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Transition appear show={props.walletModal} as={Fragment}>
         <Dialog
           as="div"
