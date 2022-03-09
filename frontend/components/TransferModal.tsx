@@ -1,15 +1,28 @@
+import { useForm } from 'react-hook-form'
 import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
+
+type FormData = {
+  receivingAddress: string
+  sendValue: string
+}
 
 const Transfer = () => {
   const { web3, metamaskAddress } = useContext(providerContext)
   const [receivingAddress, setReceivingAddress] = useState()
-  const [metamaskBalance, setMetamaskBalace] = useState<string>()
-  const [sendValue, setSendValue] = useState()
+  const [metamaskBalance, setMetamaskBalace] = useState<number>()
 
-  // add blockies
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>()
 
   const transferTokens = async () => {
+    const sendValue = getValues('sendValue')
+    const receiver = getValues('receivingAddress')
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
       const txn = await window.ethereum.request({
@@ -17,7 +30,7 @@ const Transfer = () => {
         params: [
           {
             from: metamaskAddress,
-            to: receivingAddress,
+            to: receiver,
             value: value,
             gasPrice: '0xAE9F7BCC00', // 750 ston
             gas: '0x5208', // 21000
@@ -56,6 +69,14 @@ const Transfer = () => {
     return false
   }
 
+  const validateValue = (input: any) => {
+    if (input > metamaskBalance) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   useEffect(() => {
     if (web3 && metamaskAddress) {
       getMetamaskBalance()
@@ -74,17 +95,23 @@ const Transfer = () => {
           <input
             className="rounded-md shadow-sm block py-2 px-2 w-full border border-gray-200"
             type="text"
-            onChange={(e: any) => setReceivingAddress(e.target.value)}
+            {...register('receivingAddress', { required: true, validate: validateAddress })}
           />
+          {errors.receivingAddress && (
+            <div className="text-lightorange">Please enter a valid wallet address</div>
+          )}
           <label className="block">Amount in KLAY</label>
           <input
             className="rounded-md shadow-sm block py-2 px-2 w-full border border-gray-200"
             type="number"
-            onChange={(e: any) => setSendValue(e.target.value)}
+            {...register('sendValue', { required: true, validate: validateValue })}
           />
+          {errors.sendValue && errors.sendValue.type === 'validate' && (
+            <div className="text-lightorange">Value is more than balance</div>
+          )}
           <button
             className="flex items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-            onClick={transferTokens}
+            onClick={handleSubmit(transferTokens)}
           >
             Send KLAY
           </button>
