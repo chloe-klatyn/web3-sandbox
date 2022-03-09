@@ -40,17 +40,6 @@ const WalletModal = (props: ModalProps) => {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={4000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Transition appear show={props.walletModal} as={Fragment}>
         <Dialog
           as="div"

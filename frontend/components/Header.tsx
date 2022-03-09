@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
 import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
+import Subheader from './Subheader'
 import Web3 from 'web3'
 import Caver from 'caver-js'
 
@@ -146,7 +147,7 @@ const Header = () => {
 
   return (
     <header className="grid grid-rows-2">
-      <div className="flex place-content-between p-4 items-center text-gray-900 bg-gray-100">
+      <div className="flex place-content-between p-3 items-center text-gray-900 bg-gray-100">
         <WalletModal
           walletModal={walletModal}
           setWalletModal={setWalletModal}
@@ -198,20 +199,7 @@ const Header = () => {
           </div>
         </ul>
       </div>
-      <div className="flex place-content-center items-center text-gray-900 bg-gray-100 shadow">
-        <div className="flex">
-          <Link href="/dashboard">
-            <button className="mx-10 transition ease-in-out delay-100 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
-              Dashboard
-            </button>
-          </Link>
-          <Link href="/transfers">
-            <button className="mx-10 transition ease-in-out delay-100 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
-              Transfers
-            </button>
-          </Link>
-        </div>
-      </div>
+      <Subheader />
     </header>
   )
 }
