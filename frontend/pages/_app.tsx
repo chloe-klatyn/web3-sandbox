@@ -8,12 +8,15 @@ import { useState } from 'react'
 function MyApp({ Component, pageProps }: AppProps) {
   const [klaytnProvider, setKlaytnProvider] = useState()
   const [ethProvider, setEthProvider] = useState()
+  const [metamaskAddress, setMetamaskAddress] = useState<any>()
 
   const contextData = {
     klaytnProvider: klaytnProvider,
     ethProvider: ethProvider,
+    metamaskAddress: metamaskAddress,
     setKlaytnProvider: setKlaytnProvider,
     setEthProvider: setEthProvider,
+    setMetamaskAddress: setMetamaskAddress,
   }
 
   return (

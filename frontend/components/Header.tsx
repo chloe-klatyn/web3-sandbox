@@ -9,13 +9,13 @@ import Caver from 'caver-js'
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
-  const { klaytnProvider, ethProvider } = useContext(providerContext)
+  const { klaytnProvider, ethProvider, metamaskAddress, setMetamaskAddress } =
+    useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
   const [metamaskBalance, setMetamaskBalace] = useState<string>()
   const [kaikasBalance, setKaikasBalance] = useState()
   const [metamaskConnected, setMetamaskConnected] = useState<boolean>(false)
-  const [metamaskAddress, setMetamaskAddress] = useState<any>('')
 
   const detectNetwork = () => {
     if (klaytnProvider) {
