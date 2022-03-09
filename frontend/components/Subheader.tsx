@@ -9,6 +9,11 @@ const Subheader = () => {
             Dashboard
           </button>
         </Link>
+        <Link href="/contracts">
+          <button className="mx-10 transition ease-in-out delay-100 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
+            Contracts
+          </button>
+        </Link>
         <Link href="/transfers">
           <button className="mx-10 transition ease-in-out delay-100 hover:text-blue-600 hover:border-b-2 hover:border-blue-500 focus:border-blue-500 focus:text-blue-600 focus:border-b-2 pb-2 border-b-2 border-gray-100">
             Transfers
