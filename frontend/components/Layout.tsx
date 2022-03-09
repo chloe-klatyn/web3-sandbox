@@ -21,12 +21,12 @@ const Layout = ({ children }: { children: any }) => {
     if (typeof window.klaytn !== 'undefined') {
       const provider = window['klaytn']
       setKlaytnProvider(provider)
-      console.log('klay provider:', provider)
+      // console.log('klay provider:', provider)
     }
     if (typeof window.ethereum !== 'undefined') {
       const provider = window.ethereum
       setEthProvider(provider)
-      console.log('eth provider:', provider)
+      // console.log('eth provider:', provider)
     }
   }, [])
 

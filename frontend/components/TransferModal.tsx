@@ -9,7 +9,6 @@ type FormData = {
 
 const Transfer = () => {
   const { web3, metamaskAddress } = useContext(providerContext)
-  const [receivingAddress, setReceivingAddress] = useState()
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
 
   const {
@@ -25,6 +24,7 @@ const Transfer = () => {
     const receiver = getValues('receivingAddress')
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
+      console.log('value: ', value)
       const txn = await window.ethereum.request({
         method: 'eth_sendTransaction',
         params: [
@@ -37,7 +37,8 @@ const Transfer = () => {
           },
         ],
       })
-      console.log('txn: ', txn)
+      const receipt = await txn.wait()
+      console.log('txn: ', receipt)
     } catch (err) {
       console.error(err)
     }
@@ -59,6 +60,10 @@ const Transfer = () => {
 
   const shortenAddress = (str: any) => {
     return str.substring(0, 8)
+  }
+
+  const shortenBalance = (str: any) => {
+    return Math.round(str * 10) / 10
   }
 
   const validateAddress = (input: any) => {
@@ -88,7 +93,7 @@ const Transfer = () => {
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
           <span>{metamaskAddress && shortenAddress(metamaskAddress)}</span>
-          <span>{metamaskBalance} KLAY</span>
+          <span>{metamaskBalance && shortenBalance(metamaskBalance)} KLAY</span>
         </div>
         <div className="p-4 space-y-4">
           <label className="block">Receiving Address</label>
