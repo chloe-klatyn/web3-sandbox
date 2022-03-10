@@ -3,9 +3,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import metamask from '../public/metamask.png'
 import providerContext from '../context/context'
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import kaikas from '../public/kaikas.jpeg'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
+import Web3 from 'web3'
+import Caver from 'caver-js'
 import 'react-toastify/dist/ReactToastify.css'
 
 interface ModalProps {
@@ -15,14 +17,20 @@ interface ModalProps {
 }
 
 const WalletModal = (props: ModalProps) => {
-  const { ethProvider, klaytnProvider, setMetamaskAddress, setKaikasAddress } =
+  const { ethProvider, klaytnProvider, setMetamaskAddress, setKaikasAddress, setWeb3, setCaver } =
     useContext(providerContext)
+
   const connectKaikas = async () => {
     try {
       const accounts = await klaytnProvider.enable()
+      setKaikasAddress(accounts[0])
+      const caver = new Caver(klaytnProvider)
+      setCaver(caver)
       console.log('accounts: ', accounts)
+      toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)
+      toast.error(error.message, { theme: 'colored' })
     }
   }
 
@@ -31,7 +39,8 @@ const WalletModal = (props: ModalProps) => {
       const account = await ethProvider.request({ method: 'eth_requestAccounts' })
       // console.log('account: ', account)
       setMetamaskAddress(account[0])
-      props.setMetamaskConnected(true)
+      let web3 = new Web3(ethProvider)
+      setWeb3(web3)
       props.setWalletModal(false)
       toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {

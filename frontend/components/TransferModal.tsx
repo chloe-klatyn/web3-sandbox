@@ -1,3 +1,4 @@
+import Caver from 'caver-js'
 import { useForm } from 'react-hook-form'
 import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
@@ -10,8 +11,10 @@ type FormData = {
 }
 
 const Transfer = () => {
-  const { web3, ethProvider, metamaskAddress, kaikasAddress } = useContext(providerContext)
+  const { web3, ethProvider, klaytnProvider, metamaskAddress, kaikasAddress } =
+    useContext(providerContext)
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
+  const [kaikasBalance, setKaikasBalance] = useState<any>()
 
   const {
     register,
@@ -25,7 +28,7 @@ const Transfer = () => {
     return new Promise((resolve) => setTimeout(resolve, 1000))
   }
 
-  const transferTokens = async () => {
+  const transferMetamaskTokens = async () => {
     const sendValue = getValues('sendValue')
     const receiver = getValues('receivingAddress')
     try {
@@ -59,6 +62,19 @@ const Transfer = () => {
     } catch (err: any) {
       console.error(err)
       toast.error(err.message, { theme: 'colored' })
+    }
+  }
+
+  const getKaikasBalance = async () => {
+    const caver = new Caver(klaytnProvider)
+    const account = klaytnProvider.selectedAddress
+    const balance = await caver.klay.getBalance(account)
+    if (balance) {
+      const klay = caver.utils.convertFromPeb(balance, 'KLAY')
+      console.log('balance: ', klay)
+      setKaikasBalance(klay)
+    } else {
+      console.log('no balance')
     }
   }
 
@@ -101,6 +117,12 @@ const Transfer = () => {
   }
 
   useEffect(() => {
+    if (kaikasAddress) {
+      getKaikasBalance
+    }
+  }, [kaikasAddress])
+
+  useEffect(() => {
     if (web3 && metamaskAddress) {
       getMetamaskBalance()
     }
@@ -121,8 +143,18 @@ const Transfer = () => {
       />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
-          <span>{metamaskAddress && shortenAddress(metamaskAddress)}</span>
-          <span>{metamaskBalance && shortenBalance(metamaskBalance)} KLAY</span>
+          {metamaskAddress && metamaskBalance && (
+            <>
+              <span>{shortenAddress(metamaskAddress)}</span>
+              <span>{shortenBalance(metamaskBalance)} KLAY</span>
+            </>
+          )}
+          {kaikasAddress && kaikasBalance && (
+            <>
+              <span>{shortenAddress(kaikasAddress)}</span>
+              <span>{shortenBalance(kaikasBalance)} KLAY</span>
+            </>
+          )}
         </div>
         <div className="p-4 space-y-4">
           <label className="block">Receiving Address</label>
@@ -146,7 +178,7 @@ const Transfer = () => {
           )}
           <button
             className="flex items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-            onClick={handleSubmit(transferTokens)}
+            onClick={handleSubmit(transferMetamaskTokens)}
           >
             Send KLAY
           </button>
