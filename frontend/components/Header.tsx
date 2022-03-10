@@ -10,7 +10,7 @@ import Caver from 'caver-js'
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
-  const { web3, klaytnProvider, ethProvider, metamaskAddress, setMetamaskAddress, setWeb3 } =
+  const { web3, klaytnProvider, ethProvider, metamaskAddress, kaikasAddress, setWeb3 } =
     useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
@@ -84,8 +84,6 @@ const Header = () => {
   }
 
   const initMetamaskWallet = async () => {
-    const account = await ethProvider.request({ method: 'eth_accounts' })
-    setMetamaskAddress(account[0])
     const status = ethProvider.isConnected()
     setMetamaskConnected(status)
     let web3 = new Web3(ethProvider)
@@ -183,9 +181,10 @@ const Header = () => {
               </select>
             </div>
             <li className="mx-6">
-              {metamaskConnected && metamaskAddress ? (
+              {metamaskConnected && metamaskAddress | kaikasAddress ? (
                 <button className="flex items-center rounded-full bg-blue-600 px-2 text-white">
                   {shortenAddress(metamaskAddress)}
+                  {shortenAddress(kaikasAddress)}
                   <DocumentDuplicateIcon
                     className="w-5 h-10 ml-2 text-white cursor-pointer active:text-emerald-400"
                     onClick={() => {

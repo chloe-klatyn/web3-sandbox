@@ -15,7 +15,8 @@ interface ModalProps {
 }
 
 const WalletModal = (props: ModalProps) => {
-  const { ethProvider, klaytnProvider } = useContext(providerContext)
+  const { ethProvider, klaytnProvider, setMetamaskAddress, setKaikasAddress } =
+    useContext(providerContext)
   const connectKaikas = async () => {
     try {
       const accounts = await klaytnProvider.enable()
@@ -28,7 +29,8 @@ const WalletModal = (props: ModalProps) => {
   const connectMetamask = async () => {
     try {
       const account = await ethProvider.request({ method: 'eth_requestAccounts' })
-      //   console.log('account: ', account)
+      // console.log('account: ', account)
+      setMetamaskAddress(account[0])
       props.setMetamaskConnected(true)
       props.setWalletModal(false)
       toast.success('Wallet Connected', { theme: 'colored' })

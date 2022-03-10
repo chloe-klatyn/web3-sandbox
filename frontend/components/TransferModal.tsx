@@ -10,7 +10,7 @@ type FormData = {
 }
 
 const Transfer = () => {
-  const { web3, ethProvider, metamaskAddress } = useContext(providerContext)
+  const { web3, ethProvider, metamaskAddress, kaikasAddress } = useContext(providerContext)
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
 
   const {
