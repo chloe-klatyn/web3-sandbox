@@ -4,6 +4,8 @@ import 'tailwindcss/tailwind.css'
 import { useEffect, useContext } from 'react'
 import providerContext from '../context/context'
 
+declare const window: any
+
 const Layout = ({ children }: { children: any }) => {
   const { ethProvider, klaytnProvider, setKlaytnProvider, setEthProvider } =
     useContext(providerContext)
