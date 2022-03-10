@@ -106,12 +106,12 @@ const Header = () => {
     }
   }
 
-  //   const getKaikasBalance = async () => {
-  //     const caver = new Caver(klaytnProvider)
-  //     const account = klaytnProvider.selectedAddress
-  //     const balance = await caver.klay.getBalance(account)
-  //     console.log('balance: ', balance)
-  //   }
+  const getKaikasBalance = async () => {
+    const caver = new Caver(klaytnProvider)
+    const account = klaytnProvider.selectedAddress
+    const balance = await caver.klay.getBalance(account)
+    console.log('balance: ', balance)
+  }
 
   const shortenAddress = (str: any) => {
     return str.substring(0, 5) + '...' + str.substring(str.length - 2)
@@ -141,7 +141,7 @@ const Header = () => {
       klaytnProvider.on('networkChanged', function () {
         detectNetwork()
       })
-      // getKaikasBalance()
+      getKaikasBalance()
     }
   }, [klaytnProvider])
 

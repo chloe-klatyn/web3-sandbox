@@ -33,10 +33,10 @@ const Layout = ({ children }: { children: any }) => {
   }, [])
 
   useEffect(() => {
-    if (ethProvider && klaytnProvider) {
+    if (klaytnProvider) {
       checkKaikasStatus()
     }
-  }, [ethProvider, klaytnProvider])
+  }, [klaytnProvider])
 
   return (
     <div className="flex flex-col min-h-screen justify-between">
