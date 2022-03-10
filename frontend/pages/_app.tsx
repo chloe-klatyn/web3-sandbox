@@ -9,6 +9,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [klaytnProvider, setKlaytnProvider] = useState()
   const [ethProvider, setEthProvider] = useState()
   const [metamaskAddress, setMetamaskAddress] = useState()
+  const [kaikasAddress, setKaikasAddress] = useState()
+
   const [web3, setWeb3] = useState()
 
   const contextData = {
@@ -16,10 +18,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     ethProvider: ethProvider,
     metamaskAddress: metamaskAddress,
     web3: web3,
+    kaikasAddress: kaikasAddress,
     setKlaytnProvider: setKlaytnProvider,
     setEthProvider: setEthProvider,
     setMetamaskAddress: setMetamaskAddress,
     setWeb3: setWeb3,
+    setKaikasAddress: setKaikasAddress,
   }
 
   return (

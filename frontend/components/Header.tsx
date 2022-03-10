@@ -15,7 +15,7 @@ const Header = () => {
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
   const [metamaskBalance, setMetamaskBalace] = useState<string>()
-  const [kaikasBalance, setKaikasBalance] = useState()
+  const [kaikasBalance, setKaikasBalance] = useState<any>()
   const [metamaskConnected, setMetamaskConnected] = useState<boolean>(false)
 
   const detectNetwork = () => {
@@ -29,7 +29,7 @@ const Header = () => {
     }
   }
 
-  const changeNetwork = async (e: any) => {
+  const changeMetamaskNetwork = async (e: any) => {
     const selected = e.target.value
     setNetwork(selected)
     if (selected === 'Cypress') {
@@ -83,7 +83,7 @@ const Header = () => {
     }
   }
 
-  const initWallet = async () => {
+  const initMetamaskWallet = async () => {
     const account = await ethProvider.request({ method: 'eth_accounts' })
     setMetamaskAddress(account[0])
     const status = ethProvider.isConnected()
@@ -102,7 +102,7 @@ const Header = () => {
       const ether = web3.utils.fromWei(wei, 'ether')
       setMetamaskBalace(ether)
     } else {
-      console.log('no blaance')
+      console.log('no balance')
     }
   }
 
@@ -110,7 +110,12 @@ const Header = () => {
     const caver = new Caver(klaytnProvider)
     const account = klaytnProvider.selectedAddress
     const balance = await caver.klay.getBalance(account)
-    console.log('balance: ', balance)
+    if (balance) {
+      const klay = caver.utils.convertFromPeb(balance, 'KLAY')
+      setKaikasBalance(klay)
+    } else {
+      console.log('no balance')
+    }
   }
 
   const shortenAddress = (str: any) => {
@@ -123,7 +128,7 @@ const Header = () => {
 
   useEffect(() => {
     if (ethProvider) {
-      initWallet()
+      initMetamaskWallet()
     }
   }, [ethProvider, metamaskConnected])
 
@@ -159,6 +164,7 @@ const Header = () => {
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
             <div className="mx-6 flex">
+              {kaikasBalance && shortenBalance(kaikasBalance)}
               {metamaskBalance && shortenBalance(metamaskBalance)} KLAY
               <Link href="/transfers">
                 <SwitchHorizontalIcon className="w-5 h-5 ml-2 text-slate-700 cursor-pointer" />
@@ -169,7 +175,7 @@ const Header = () => {
                 className="form-select block w-full px-2 py-2 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
                 aria-label="Default select example"
                 value={network}
-                onChange={changeNetwork}
+                onChange={changeMetamaskNetwork}
               >
                 {networks.map((env) => (
                   <option key={env}>{env}</option>
