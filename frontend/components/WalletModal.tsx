@@ -24,9 +24,9 @@ const WalletModal = (props: ModalProps) => {
     try {
       const accounts = await klaytnProvider.enable()
       setKaikasAddress(accounts[0])
+      console.log('accounts: ', accounts)
       const caver = new Caver(klaytnProvider)
       setCaver(caver)
-      console.log('accounts: ', accounts)
       toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)

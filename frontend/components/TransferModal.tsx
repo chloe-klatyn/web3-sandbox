@@ -11,7 +11,7 @@ type FormData = {
 }
 
 const Transfer = () => {
-  const { web3, ethProvider, klaytnProvider, metamaskAddress, kaikasAddress } =
+  const { web3, caver, ethProvider, klaytnProvider, metamaskAddress, kaikasAddress } =
     useContext(providerContext)
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
   const [kaikasBalance, setKaikasBalance] = useState<any>()
@@ -69,9 +69,10 @@ const Transfer = () => {
     const caver = new Caver(klaytnProvider)
     const account = klaytnProvider.selectedAddress
     const balance = await caver.klay.getBalance(account)
+    console.log('balance: ', balance)
+
     if (balance) {
       const klay = caver.utils.convertFromPeb(balance, 'KLAY')
-      console.log('balance: ', klay)
       setKaikasBalance(klay)
     } else {
       console.log('no balance')
@@ -117,10 +118,11 @@ const Transfer = () => {
   }
 
   useEffect(() => {
-    if (kaikasAddress) {
-      getKaikasBalance
+    console.log('kaikas: ', kaikasAddress)
+    if (caver && kaikasAddress) {
+      getKaikasBalance()
     }
-  }, [kaikasAddress])
+  }, [caver, kaikasAddress])
 
   useEffect(() => {
     if (web3 && metamaskAddress) {

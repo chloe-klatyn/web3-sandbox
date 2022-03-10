@@ -190,7 +190,7 @@ const Header = () => {
                   />
                 </button>
               )}
-              {metamaskConnected && metamaskAddress ? (
+              {metamaskAddress && (
                 <button className="flex items-center rounded-full bg-blue-600 px-2 text-white">
                   {shortenAddress(metamaskAddress)}
                   <DocumentDuplicateIcon
@@ -200,7 +200,8 @@ const Header = () => {
                     }}
                   />
                 </button>
-              ) : (
+              )}
+              {!metamaskAddress && !kaikasAddress && (
                 <button
                   className="rounded-full bg-blue-600 px-3 py-2 text-white"
                   onClick={() => setWalletModal(true)}
