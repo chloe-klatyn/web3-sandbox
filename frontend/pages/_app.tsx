@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
 import Head from 'next/head'
 import GlobalContext from '../context/context'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [klaytnProvider, setKlaytnProvider] = useState()
@@ -27,6 +27,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     setKaikasAddress: setKaikasAddress,
     setCaver: setCaver,
   }
+
+  useEffect(() => {
+    console.log('klaytn: ', klaytnProvider)
+    console.log('eth: ', ethProvider)
+  }, [])
 
   return (
     <div>

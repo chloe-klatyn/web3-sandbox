@@ -24,8 +24,21 @@ const Transfer = () => {
     formState: { errors },
   } = useForm<FormData>()
 
-  const sleep = () => {
-    return new Promise((resolve) => setTimeout(resolve, 1000))
+  const transferKaikasTokens = async () => {
+    const sendValue = getValues('sendValue')
+    const receiver = getValues('receivingAddress')
+    try {
+      const txn = await caver.klay.sendTransaction({
+        type: 'VALUE_TRANSFER',
+        from: kaikasAddress,
+        to: receiver,
+        value: caver.utils.toPeb(sendValue, 'KLAY'),
+        gas: 8000000,
+      })
+      console.log('txn: ', txn)
+    } catch (err: any) {
+      console.error(err)
+    }
   }
 
   const transferMetamaskTokens = async () => {
@@ -70,7 +83,6 @@ const Transfer = () => {
     const account = klaytnProvider.selectedAddress
     const balance = await caver.klay.getBalance(account)
     console.log('balance: ', balance)
-
     if (balance) {
       const klay = caver.utils.convertFromPeb(balance, 'KLAY')
       setKaikasBalance(klay)
@@ -117,12 +129,15 @@ const Transfer = () => {
     }
   }
 
+  const sleep = () => {
+    return new Promise((resolve) => setTimeout(resolve, 1000))
+  }
+
   useEffect(() => {
-    console.log('kaikas: ', kaikasAddress)
-    if (caver && kaikasAddress) {
+    if (klaytnProvider) {
       getKaikasBalance()
     }
-  }, [caver, kaikasAddress])
+  }, [klaytnProvider])
 
   useEffect(() => {
     if (web3 && metamaskAddress) {
@@ -180,7 +195,7 @@ const Transfer = () => {
           )}
           <button
             className="flex items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-            onClick={handleSubmit(transferMetamaskTokens)}
+            onClick={handleSubmit(transferKaikasTokens)}
           >
             Send KLAY
           </button>

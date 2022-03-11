@@ -10,7 +10,7 @@ import Caver from 'caver-js'
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
-  const { web3, klaytnProvider, ethProvider, metamaskAddress, kaikasAddress } =
+  const { web3, klaytnProvider, ethProvider, metamaskAddress, kaikasAddress, setKaikasAddress } =
     useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
@@ -105,6 +105,7 @@ const Header = () => {
   const getKaikasBalance = async () => {
     const caver = new Caver(klaytnProvider)
     const account = klaytnProvider.selectedAddress
+    setKaikasAddress(account)
     const balance = await caver.klay.getBalance(account)
     if (balance) {
       const klay = caver.utils.convertFromPeb(balance, 'KLAY')
@@ -180,12 +181,12 @@ const Header = () => {
             </div>
             <li className="mx-6">
               {kaikasAddress && (
-                <button className="flex items-center rounded-full bg-blue-600 px-2 text-white">
+                <button className="flex items-center rounded-full px-2 text-umber">
                   {shortenAddress(kaikasAddress)}
                   <DocumentDuplicateIcon
-                    className="w-5 h-10 ml-2 text-white cursor-pointer active:text-emerald-400"
+                    className="w-5 h-10 ml-2 text-umber cursor-pointer active:text-emerald-400"
                     onClick={() => {
-                      navigator.clipboard.writeText(metamaskAddress)
+                      navigator.clipboard.writeText(kaikasAddress)
                     }}
                   />
                 </button>
