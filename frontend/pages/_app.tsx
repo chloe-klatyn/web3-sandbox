@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [kaikasAddress, setKaikasAddress] = useState()
   const [web3, setWeb3] = useState()
   const [caver, setCaver] = useState()
+  const [currentWallet, setCurrentWallet] = useState()
 
   const contextData = {
     klaytnProvider: klaytnProvider,
@@ -20,12 +21,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     kaikasAddress: kaikasAddress,
     web3: web3,
     caver: caver,
+    currentWallet: currentWallet,
     setKlaytnProvider: setKlaytnProvider,
     setEthProvider: setEthProvider,
     setMetamaskAddress: setMetamaskAddress,
     setWeb3: setWeb3,
     setKaikasAddress: setKaikasAddress,
     setCaver: setCaver,
+    setCurrentWallet: setCurrentWallet,
   }
 
   // useEffect(() => {

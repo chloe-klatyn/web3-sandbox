@@ -17,6 +17,7 @@ const Header = () => {
     ethProvider,
     metamaskAddress,
     kaikasAddress,
+    currentWallet,
     setKaikasAddress,
     setMetamaskAddress,
   } = useContext(providerContext)
@@ -167,8 +168,10 @@ const Header = () => {
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
             <div className="mx-6 flex">
-              {kaikasBalance && shortenBalance(kaikasBalance)}
-              {metamaskBalance && shortenBalance(metamaskBalance)} KLAY
+              {currentWallet === 'Kaikas' && kaikasBalance
+                ? shortenBalance(kaikasBalance)
+                : metamaskBalance && shortenBalance(metamaskBalance)}{' '}
+              KLAY
               <Link href="/transfers">
                 <SwitchHorizontalIcon className="w-5 h-5 ml-2 text-slate-700 cursor-pointer" />
               </Link>

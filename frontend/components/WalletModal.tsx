@@ -17,8 +17,15 @@ interface ModalProps {
 }
 
 const WalletModal = (props: ModalProps) => {
-  const { ethProvider, klaytnProvider, setMetamaskAddress, setKaikasAddress, setWeb3, setCaver } =
-    useContext(providerContext)
+  const {
+    ethProvider,
+    klaytnProvider,
+    setMetamaskAddress,
+    setKaikasAddress,
+    setWeb3,
+    setCaver,
+    setCurrentWallet,
+  } = useContext(providerContext)
 
   const connectKaikas = async () => {
     try {
@@ -28,6 +35,7 @@ const WalletModal = (props: ModalProps) => {
       const caver = new Caver(klaytnProvider)
       setCaver(caver)
       props.setWalletModal(false)
+      setCurrentWallet('Kaikas')
       toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)
@@ -43,6 +51,7 @@ const WalletModal = (props: ModalProps) => {
       let web3 = new Web3(ethProvider)
       setWeb3(web3)
       props.setWalletModal(false)
+      setCurrentWallet('Metamask')
       toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)

@@ -168,7 +168,7 @@ const Transfer = () => {
     <div className="flex flex-col items-center w-full">
       <ToastContainer
         position="bottom-right"
-        autoClose={4000}
+        autoClose={3000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick
