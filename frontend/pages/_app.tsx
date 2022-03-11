@@ -28,10 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     setCaver: setCaver,
   }
 
-  useEffect(() => {
-    console.log('klaytn: ', klaytnProvider)
-    console.log('eth: ', ethProvider)
-  }, [])
+  // useEffect(() => {
+  //   console.log('klaytn: ', klaytnProvider)
+  //   console.log('eth: ', ethProvider)
+  // }, [])
 
   return (
     <div>

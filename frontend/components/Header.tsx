@@ -18,6 +18,7 @@ const Header = () => {
     metamaskAddress,
     kaikasAddress,
     setKaikasAddress,
+    setMetamaskAddress,
   } = useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
@@ -25,7 +26,7 @@ const Header = () => {
   const [kaikasBalance, setKaikasBalance] = useState<any>()
   const [metamaskConnected, setMetamaskConnected] = useState<boolean>(false)
 
-  const detectNetwork = () => {
+  const detectKaikasNetwork = () => {
     if (klaytnProvider) {
       const networkId = klaytnProvider.networkVersion
       if (networkId === 1001) {
@@ -96,13 +97,11 @@ const Header = () => {
   }
 
   const getMetamaskBalance = async () => {
-    const balance = await ethProvider.request({
-      method: 'eth_getBalance',
-      params: [metamaskAddress, 'latest'],
-    })
+    const account = ethProvider.selectedAddress
+    setMetamaskAddress(account)
+    const balance = await web3.eth.getBalance(account)
     if (balance) {
-      const wei = web3.utils.hexToNumberString(balance)
-      const ether = web3.utils.fromWei(wei, 'ether')
+      const ether = web3.utils.fromWei(balance, 'ether')
       setMetamaskBalace(ether)
     } else {
       console.log('no balance')
@@ -137,20 +136,19 @@ const Header = () => {
   }, [ethProvider, metamaskConnected])
 
   useEffect(() => {
-    if (web3 && metamaskAddress) {
+    if (web3 && ethProvider) {
       getMetamaskBalance()
     }
-  }, [web3, metamaskAddress, metamaskConnected])
+  }, [web3, ethProvider])
 
   useEffect(() => {
     if (klaytnProvider && caver) {
       if (!network) {
-        detectNetwork()
+        detectKaikasNetwork()
       }
       klaytnProvider.on('networkChanged', function () {
-        detectNetwork()
+        detectKaikasNetwork()
       })
-      console.log('address: ', kaikasAddress)
       getKaikasBalance()
     }
   }, [klaytnProvider, caver])
