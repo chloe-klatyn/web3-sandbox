@@ -27,6 +27,7 @@ const WalletModal = (props: ModalProps) => {
       console.log('accounts: ', accounts)
       const caver = new Caver(klaytnProvider)
       setCaver(caver)
+      props.setWalletModal(false)
       toast.success('Wallet Connected', { theme: 'colored' })
     } catch (error: any) {
       console.error(error.message)

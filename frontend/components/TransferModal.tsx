@@ -27,6 +27,7 @@ const Transfer = () => {
   const transferKaikasTokens = async () => {
     const sendValue = getValues('sendValue')
     const receiver = getValues('receivingAddress')
+    const id = toast.loading('Sending Tokens....', { theme: 'colored' })
     try {
       const txn = await caver.klay.sendTransaction({
         type: 'VALUE_TRANSFER',
@@ -36,18 +37,31 @@ const Transfer = () => {
         gas: 8000000,
       })
       console.log('txn: ', txn)
+      toast.update(id, {
+        render: 'Tokens sent successfully',
+        type: 'success',
+        autoClose: 3000,
+        isLoading: false,
+      })
     } catch (err: any) {
       console.error(err)
+      toast.update(id, {
+        render: err.message,
+        type: 'error',
+        autoClose: 3000,
+        isLoading: false,
+      })
     }
   }
 
   const transferMetamaskTokens = async () => {
     const sendValue = getValues('sendValue')
     const receiver = getValues('receivingAddress')
+    const id = toast.loading('Sending Tokens....', { theme: 'colored' })
+
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
       console.log('value: ', value)
-      const id = toast.loading('Sending Tokens....', { theme: 'colored' })
       const txn = await ethProvider.request({
         method: 'eth_sendTransaction',
         params: [
@@ -74,7 +88,12 @@ const Transfer = () => {
       })
     } catch (err: any) {
       console.error(err)
-      toast.error(err.message, { theme: 'colored' })
+      toast.update(id, {
+        render: err.message,
+        type: 'error',
+        autoClose: 3000,
+        isLoading: false,
+      })
     }
   }
 
