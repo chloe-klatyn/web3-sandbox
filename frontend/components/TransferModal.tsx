@@ -11,8 +11,15 @@ type FormData = {
 }
 
 const Transfer = () => {
-  const { web3, caver, ethProvider, klaytnProvider, metamaskAddress, kaikasAddress } =
-    useContext(providerContext)
+  const {
+    web3,
+    caver,
+    ethProvider,
+    klaytnProvider,
+    metamaskAddress,
+    kaikasAddress,
+    currentWallet,
+  } = useContext(providerContext)
   const [metamaskBalance, setMetamaskBalace] = useState<number>()
   const [kaikasBalance, setKaikasBalance] = useState<any>()
 
@@ -212,12 +219,23 @@ const Transfer = () => {
           {errors.sendValue && errors.sendValue.type === 'validate' && (
             <div className="text-lightorange">Value is more than balance</div>
           )}
-          <button
-            className="flex items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-            onClick={handleSubmit(transferKaikasTokens)}
-          >
-            Send KLAY
-          </button>
+          {currentWallet === 'Kaikas' ? (
+            <button
+              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+              type="submit"
+              onClick={handleSubmit(transferKaikasTokens)}
+            >
+              Send KLAY
+            </button>
+          ) : (
+            <button
+              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+              type="submit"
+              onClick={handleSubmit(transferMetamaskTokens)}
+            >
+              Send KLAY
+            </button>
+          )}
         </div>
       </div>
     </div>
