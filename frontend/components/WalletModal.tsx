@@ -92,10 +92,10 @@ const WalletModal = (props: ModalProps) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-1/2 max-w-md p-6 my-12 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block font-light w-1/2 max-w-md p-6 my-12 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-3xl font-medium leading-6 text-gray-900 flex justify-center"
+                  className="text-3xl font-light leading-6 text-gray-900 flex justify-center"
                 >
                   Select Wallet
                 </Dialog.Title>

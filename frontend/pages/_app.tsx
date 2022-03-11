@@ -31,11 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     setCurrentWallet: setCurrentWallet,
   }
 
-  // useEffect(() => {
-  //   console.log('klaytn: ', klaytnProvider)
-  //   console.log('eth: ', ethProvider)
-  // }, [])
-
   return (
     <div>
       <GlobalContext.Provider value={contextData}>
