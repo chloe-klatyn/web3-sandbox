@@ -134,10 +134,10 @@ const Transfer = () => {
   }
 
   useEffect(() => {
-    if (klaytnProvider) {
+    if (klaytnProvider && kaikasAddress) {
       getKaikasBalance()
     }
-  }, [klaytnProvider])
+  }, [klaytnProvider, kaikasAddress])
 
   useEffect(() => {
     if (web3 && metamaskAddress) {

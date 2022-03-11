@@ -10,8 +10,15 @@ import Caver from 'caver-js'
 const networks = ['Baobab', 'Cypress']
 
 const Header = () => {
-  const { web3, klaytnProvider, ethProvider, metamaskAddress, kaikasAddress, setKaikasAddress } =
-    useContext(providerContext)
+  const {
+    web3,
+    caver,
+    klaytnProvider,
+    ethProvider,
+    metamaskAddress,
+    kaikasAddress,
+    setKaikasAddress,
+  } = useContext(providerContext)
   const [walletModal, setWalletModal] = useState<boolean>(false)
   const [network, setNetwork] = useState<any>()
   const [metamaskBalance, setMetamaskBalace] = useState<string>()
@@ -136,16 +143,17 @@ const Header = () => {
   }, [web3, metamaskAddress, metamaskConnected])
 
   useEffect(() => {
-    if (klaytnProvider) {
+    if (klaytnProvider && caver) {
       if (!network) {
         detectNetwork()
       }
       klaytnProvider.on('networkChanged', function () {
         detectNetwork()
       })
+      console.log('address: ', kaikasAddress)
       getKaikasBalance()
     }
-  }, [klaytnProvider])
+  }, [klaytnProvider, caver])
 
   return (
     <header className="grid grid-rows-2">
