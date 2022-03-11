@@ -123,7 +123,7 @@ const Header = () => {
   }
 
   const shortenAddress = (str: any) => {
-    return str.substring(0, 5) + '...' + str.substring(str.length - 2)
+    return str.substring(0, 6) + '...' + str.substring(str.length - 4)
   }
 
   const shortenBalance = (str: any) => {
@@ -155,7 +155,7 @@ const Header = () => {
   }, [klaytnProvider, caver])
 
   return (
-    <header className="grid grid-rows-2">
+    <header className="grid grid-rows-2 font-light">
       <div className="flex place-content-between p-3 items-center text-gray-900 bg-gray-100">
         <WalletModal
           walletModal={walletModal}
@@ -163,7 +163,7 @@ const Header = () => {
           setMetamaskConnected={setMetamaskConnected}
         />
         <Link href="/">
-          <a className="mx-10">Klaytn Kit</a>
+          <a className="mx-10 text-xl">Klaytn Starter Kit</a>
         </Link>
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
@@ -178,7 +178,7 @@ const Header = () => {
             </div>
             <div className="xl:w-84">
               <select
-                className="form-select block w-full px-2 py-2 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
+                className="form-select block w-full px-2 py-2 bg-white bg-clip-padding bg-no-repeat border border-grey rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none"
                 aria-label="Default select example"
                 value={network}
                 onChange={changeMetamaskNetwork}
@@ -190,10 +190,15 @@ const Header = () => {
             </div>
             <li className="mx-6">
               {kaikasAddress && (
-                <button className="flex items-center rounded-full px-2 text-umber">
+                <button
+                  className="flex items-center text-gray-600 space-x-4 active:text-emerald-400"
+                  onClick={() => {
+                    navigator.clipboard.writeText(kaikasAddress)
+                  }}
+                >
                   {shortenAddress(kaikasAddress)}
                   <DocumentDuplicateIcon
-                    className="w-5 h-10 ml-2 text-umber cursor-pointer active:text-emerald-400"
+                    className="w-5 h-10 ml-2 cursor-pointer"
                     onClick={() => {
                       navigator.clipboard.writeText(kaikasAddress)
                     }}
@@ -201,10 +206,15 @@ const Header = () => {
                 </button>
               )}
               {metamaskAddress && (
-                <button className="flex items-center rounded-full bg-blue-600 px-2 text-white">
+                <button
+                  className="flex items-center text-gray-600 space-x-4 active:text-emerald-400"
+                  onClick={() => {
+                    navigator.clipboard.writeText(metamaskAddress)
+                  }}
+                >
                   {shortenAddress(metamaskAddress)}
                   <DocumentDuplicateIcon
-                    className="w-5 h-10 ml-2 text-white cursor-pointer active:text-emerald-400"
+                    className="w-5 h-10 ml-2 cursor-pointer active:text-emerald-400"
                     onClick={() => {
                       navigator.clipboard.writeText(metamaskAddress)
                     }}
@@ -213,7 +223,7 @@ const Header = () => {
               )}
               {!metamaskAddress && !kaikasAddress && (
                 <button
-                  className="rounded-full bg-blue-600 px-3 py-2 text-white"
+                  className="border rounded-full px-4 py-2 border-grey bg-white"
                   onClick={() => setWalletModal(true)}
                 >
                   Connect
