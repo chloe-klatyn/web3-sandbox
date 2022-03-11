@@ -50,6 +50,8 @@ const Transfer = () => {
         autoClose: 3000,
         isLoading: false,
       })
+      setValue('receivingAddress', '')
+      setValue('sendValue', '')
     } catch (err: any) {
       console.error(err)
       toast.update(id, {
@@ -65,7 +67,6 @@ const Transfer = () => {
     const sendValue = getValues('sendValue')
     const receiver = getValues('receivingAddress')
     const id = toast.loading('Sending Tokens....', { theme: 'colored' })
-
     try {
       const value = web3.utils.toWei(sendValue, 'ether')
       console.log('value: ', value)
@@ -87,6 +88,8 @@ const Transfer = () => {
         await sleep()
       }
       console.log('receipt: ', transactionReceipt)
+      setValue('receivingAddress', '')
+      setValue('sendValue', '')
       toast.update(id, {
         render: 'Tokens sent successfully',
         type: 'success',
@@ -132,7 +135,7 @@ const Transfer = () => {
   }
 
   const shortenAddress = (str: any) => {
-    return str.substring(0, 8)
+    return str.substring(0, 6) + '...' + str.substring(str.length - 4)
   }
 
   const shortenBalance = (str: any) => {
