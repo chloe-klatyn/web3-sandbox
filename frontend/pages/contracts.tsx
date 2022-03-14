@@ -12,7 +12,7 @@ const Contracts: NextPage = () => {
         <button
           className="border-b-2 border-white hover:border-b-2 hover:border-grey"
           onClick={() => {
-            setCurrentContract('KIP17')
+            setCurrentContract('KIP7')
           }}
         >
           KIP7
@@ -20,7 +20,7 @@ const Contracts: NextPage = () => {
         <button
           className="border-b-2 border-white hover:border-b-2 hover:border-grey"
           onClick={() => {
-            setCurrentContract('KIP7')
+            setCurrentContract('KIP17')
           }}
         >
           KIP17
