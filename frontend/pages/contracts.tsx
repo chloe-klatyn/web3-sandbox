@@ -8,13 +8,24 @@ const Contracts: NextPage = () => {
 
   return (
     <div className="mt-20">
-      <div className="flex justify-center space-x-10 font-2xl font-bold">
-        <span>KIP7</span>
-        <span>KIP17</span>
+      <div className="flex justify-center space-x-10 text-2xl font-bold">
+        <button
+          onClick={() => {
+            setCurrentContract('KIP17')
+          }}
+        >
+          KIP7
+        </button>
+        <button
+          onClick={() => {
+            setCurrentContract('KIP7')
+          }}
+        >
+          KIP17
+        </button>
       </div>
-      <div>
-        <KIP7 />
-        <KIP17 />
+      <div className="flex justify-center mt-20">
+        {currentContract === 'KIP7' ? <KIP7 /> : <KIP17 />}
       </div>
     </div>
   )
