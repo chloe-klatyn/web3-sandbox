@@ -48,3 +48,6 @@ artifacts
 
 #System files 
 .DS_Store
+
+#Deployment files
+frontend/deployed/
