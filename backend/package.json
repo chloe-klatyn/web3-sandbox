@@ -35,8 +35,8 @@
   "devDependencies": {
     "concurrently": "^5.3.0",
     "ganache-cli": "^6.12.1",
-    "truffle": "^5.1.23",
     "openzeppelin-test-helpers": "^0.3.2",
+    "truffle": "^5.1.61",
     "truffle-assertions": "^0.9.2"
   }
 }
