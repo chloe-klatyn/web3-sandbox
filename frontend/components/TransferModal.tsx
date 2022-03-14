@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { shortenAddress, shortenBalance, validateAddress, sleep } from '../helpers'
 
 type FormData = {
   receivingAddress: string
@@ -134,32 +135,12 @@ const Transfer = () => {
     }
   }
 
-  const shortenAddress = (str: any) => {
-    return str.substring(0, 6) + '...' + str.substring(str.length - 4)
-  }
-
-  const shortenBalance = (str: any) => {
-    return Math.round(str * 10) / 10
-  }
-
-  const validateAddress = (input: any) => {
-    const prefix = input.slice(0, 2)
-    if (input.length === 42 && prefix === '0x') {
-      return true
-    }
-    return false
-  }
-
   const validateValue = (input: any) => {
     if (metamaskBalance && input > metamaskBalance) {
       return false
     } else {
       return true
     }
-  }
-
-  const sleep = () => {
-    return new Promise((resolve) => setTimeout(resolve, 1000))
   }
 
   useEffect(() => {
@@ -228,7 +209,7 @@ const Transfer = () => {
               type="submit"
               onClick={handleSubmit(transferKaikasTokens)}
             >
-              Send KLAY
+              Send Tokens
             </button>
           ) : (
             <button
@@ -236,7 +217,7 @@ const Transfer = () => {
               type="submit"
               onClick={handleSubmit(transferMetamaskTokens)}
             >
-              Send KLAY
+              Send Tokens
             </button>
           )}
         </div>

@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
 import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
+import { shortenAddress, shortenBalance } from '../helpers'
 import Subheader from './Subheader'
 import Web3 from 'web3'
 import Caver from 'caver-js'
@@ -120,14 +121,6 @@ const Header = () => {
     } else {
       console.log('no balance')
     }
-  }
-
-  const shortenAddress = (str: any) => {
-    return str.substring(0, 6) + '...' + str.substring(str.length - 4)
-  }
-
-  const shortenBalance = (str: any) => {
-    return Math.round(str * 10) / 10
   }
 
   useEffect(() => {

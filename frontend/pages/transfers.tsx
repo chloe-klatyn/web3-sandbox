@@ -3,7 +3,7 @@ import Transfer from '../components/TransferModal'
 
 const Transfers: NextPage = () => {
   return (
-    <div className="">
+    <div className="mt-20">
       <Transfer />
     </div>
   )
