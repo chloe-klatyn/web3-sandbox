@@ -8,19 +8,27 @@ import providerContext from '../context/context'
 
 const Contracts: NextPage = (kip7: any) => {
   const [currentContract, setCurrentContract] = useState('KIP7')
-  const { caver } = useContext(providerContext)
+  const { web3, caver } = useContext(providerContext)
 
-  // console.log('address: ', kip7.address)
-  // console.log('abi: ', kip7.abi)
-
-  const instantiateContract = async () => {
-    const kip7contract = await caver.contract.create(kip7.abi)
+  const instantiateKlayContract = async () => {
+    const kip7contract = await caver.contract.create(kip7.abi, kip7.address)
     console.log('contract: ', kip7contract)
   }
 
+  const instantiateEthContract = async () => {
+    const ethContract = new web3.eth.Contract(kip7.abi, kip7.address)
+    console.log('eth: ', ethContract)
+  }
+
+  useEffect(() => {
+    if (web3) {
+      instantiateEthContract()
+    }
+  }, [web3])
+
   useEffect(() => {
     if (caver) {
-      instantiateContract()
+      instantiateKlayContract()
     }
   }, [caver])
 
