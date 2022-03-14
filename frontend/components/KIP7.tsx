@@ -5,6 +5,7 @@ import providerContext from '../context/context'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { shortenAddress, shortenBalance, validateAddress, sleep } from '../helpers'
+import fs from 'fs'
 
 type FormData = {
   receivingAddress: string
@@ -21,8 +22,6 @@ const KIP7 = () => {
     kaikasAddress,
     currentWallet,
   } = useContext(providerContext)
-
-  console.log('testing branch')
 
   const {
     register,
