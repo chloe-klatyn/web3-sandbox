@@ -1,6 +1,6 @@
 const KIP17 = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-1/4">
       <div className="grid grid-cols-1">
         <label className="md:text-sm text-xs text-gray-500 font-body tracking-wider">Name</label>
         <input
@@ -41,6 +41,11 @@ const KIP17 = () => {
           </div>
           <input type="file" className="hidden" accept=".jpeg,.jpg,.png,.gif" />
         </label>
+      </div>
+      <div className="flex items-center justify-center pt-5 pb-5">
+        <button className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma">
+          MINT KIP7 TOKEN
+        </button>
       </div>
     </div>
   )

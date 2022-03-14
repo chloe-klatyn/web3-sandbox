@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import KIP7 from '../components/KIP7'
 import KIP17 from '../components/KIP17'
-import { useState, useEffect, useContext } from 'react'
+import { useState } from 'react'
 
 const Contracts: NextPage = () => {
   const [currentContract, setCurrentContract] = useState('KIP7')
 
   return (
-    <div className="mt-16">
+    <div className="mt-10">
       <div className="flex justify-center space-x-10 text-2xl font-bold">
         <button
           className="border-b-2 border-white hover:border-b-2 hover:border-grey"
