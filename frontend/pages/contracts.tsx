@@ -1,34 +1,28 @@
-import { GetStaticProps } from 'next'
 import type { NextPage } from 'next'
 import KIP7 from '../components/KIP7'
 import KIP17 from '../components/KIP17'
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { promises as fs } from 'fs'
 import path from 'path'
-
-export async function getStaticProps() {
-  const postsDirectory = path.join(process.cwd(), 'deployed')
-
-  const addressPath = path.join(postsDirectory, 'deployedAddress')
-  const addressContents = await fs.readFile(addressPath, 'utf8')
-
-  const abiPath = path.join(postsDirectory, 'deployedABI')
-  const abiContents = await fs.readFile(abiPath)
-  let abi = JSON.parse(abiContents.toString())
-
-  return {
-    props: {
-      address: addressContents,
-      abi: abi,
-    },
-  }
-}
+import providerContext from '../context/context'
 
 const Contracts: NextPage = (kip7: any) => {
   const [currentContract, setCurrentContract] = useState('KIP7')
+  const { caver } = useContext(providerContext)
 
-  console.log('address: ', kip7.address)
-  console.log('abi: ', kip7.abi)
+  // console.log('address: ', kip7.address)
+  // console.log('abi: ', kip7.abi)
+
+  const instantiateContract = async () => {
+    const kip7contract = await caver.contract.create(kip7.abi)
+    console.log('contract: ', kip7contract)
+  }
+
+  useEffect(() => {
+    if (caver) {
+      instantiateContract()
+    }
+  }, [caver])
 
   return (
     <div className="mt-10">
@@ -56,3 +50,21 @@ const Contracts: NextPage = (kip7: any) => {
 }
 
 export default Contracts
+
+export async function getStaticProps() {
+  const postsDirectory = path.join(process.cwd(), 'deployed')
+
+  const addressPath = path.join(postsDirectory, 'deployedAddress')
+  const addressContents = await fs.readFile(addressPath, 'utf8')
+
+  const abiPath = path.join(postsDirectory, 'deployedABI')
+  const abiContents = await fs.readFile(abiPath)
+  let abi = JSON.parse(abiContents.toString())
+
+  return {
+    props: {
+      address: addressContents,
+      abi: abi,
+    },
+  }
+}
