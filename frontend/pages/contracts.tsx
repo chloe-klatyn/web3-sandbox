@@ -26,9 +26,7 @@ const Contracts: NextPage = () => {
           KIP17
         </button>
       </div>
-      <div className="flex justify-center mt-20">
-        {currentContract === 'KIP7' ? <KIP7 /> : <KIP17 />}
-      </div>
+      <div className="mt-20">{currentContract === 'KIP7' ? <KIP7 /> : <KIP17 />}</div>
     </div>
   )
 }

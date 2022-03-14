@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import Transfer from '../components/TransferModal'
+import TransferKlay from '../components/TransferKlay'
 
 const Transfers: NextPage = () => {
   return (
     <div className="mt-20">
-      <Transfer />
+      <TransferKlay />
     </div>
   )
 }
