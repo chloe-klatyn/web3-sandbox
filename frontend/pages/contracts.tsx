@@ -7,9 +7,10 @@ const Contracts: NextPage = () => {
   const [currentContract, setCurrentContract] = useState('KIP7')
 
   return (
-    <div className="mt-20">
+    <div className="mt-16">
       <div className="flex justify-center space-x-10 text-2xl font-bold">
         <button
+          className="border-b-2 border-white hover:border-b-2 hover:border-grey"
           onClick={() => {
             setCurrentContract('KIP17')
           }}
@@ -17,6 +18,7 @@ const Contracts: NextPage = () => {
           KIP7
         </button>
         <button
+          className="border-b-2 border-white hover:border-b-2 hover:border-grey"
           onClick={() => {
             setCurrentContract('KIP7')
           }}
