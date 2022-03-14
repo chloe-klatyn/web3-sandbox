@@ -5,14 +5,17 @@ import providerContext from '../context/context'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { shortenAddress, shortenBalance, validateAddress, sleep } from '../helpers'
-import fs from 'fs'
 
 type FormData = {
   receivingAddress: string
   sendValue: string
 }
 
-const KIP7 = () => {
+interface props {
+  kip7: any
+}
+
+const KIP7 = ({ kip7 }: props) => {
   const {
     web3,
     caver,
@@ -30,6 +33,22 @@ const KIP7 = () => {
     setValue,
     formState: { errors },
   } = useForm<FormData>()
+
+  console.log('kip7 props: ', kip7)
+
+  const getContractData = async () => {
+    const userBalance = await kip7.methods.balanceOf(kaikasAddress).call()
+    console.log('balance: ', userBalance)
+    // const name = await kip7.name()
+    // const supply = await kip7.supply()
+    // console.log('name: ', name, 'supply: ', supply)
+  }
+
+  useEffect(() => {
+    if (kip7) {
+      getContractData()
+    }
+  }, [kip7])
 
   return (
     <div className="flex flex-col items-center w-full">

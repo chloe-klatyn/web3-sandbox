@@ -6,18 +6,21 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import providerContext from '../context/context'
 
-const Contracts: NextPage = (kip7: any) => {
+const Contracts: NextPage = (kip7Data: any) => {
   const [currentContract, setCurrentContract] = useState('KIP7')
   const { web3, caver } = useContext(providerContext)
+  const [kip7, setKip7] = useState()
 
   const instantiateKlayContract = async () => {
-    const kip7contract = await caver.contract.create(kip7.abi, kip7.address)
-    console.log('contract: ', kip7contract)
+    const kip7Contract = await caver.contract.create(kip7Data.abi, kip7Data.address)
+    setKip7(kip7Contract)
+    // console.log('klay contract: ', kip7Contract)
   }
 
   const instantiateEthContract = async () => {
-    const ethContract = new web3.eth.Contract(kip7.abi, kip7.address)
-    console.log('eth: ', ethContract)
+    const kip7Contract = new web3.eth.Contract(kip7Data.abi, kip7Data.address)
+    setKip7(kip7Contract)
+    // console.log('eth contract: ', kip7Contract)
   }
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const Contracts: NextPage = (kip7: any) => {
           KIP17
         </button>
       </div>
-      <div className="mt-20">{currentContract === 'KIP7' ? <KIP7 /> : <KIP17 />}</div>
+      <div className="mt-20">{currentContract === 'KIP7' ? <KIP7 kip7={kip7} /> : <KIP17 />}</div>
     </div>
   )
 }
