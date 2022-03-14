@@ -22,6 +22,8 @@ const KIP7 = () => {
     currentWallet,
   } = useContext(providerContext)
 
+  console.log('testing branch')
+
   const {
     register,
     handleSubmit,
