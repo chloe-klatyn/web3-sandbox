@@ -39,9 +39,9 @@ const Layout = ({ children }: { children: any }) => {
   }, [klaytnProvider])
 
   return (
-    <div className="flex flex-col min-h-screen justify-between font-Outfit">
+    <div className="flex flex-col h-screen justify-between font-Outfit">
       <Header />
-      <main className="font-light">{children}</main>
+      <main className="font-light mb-auto">{children}</main>
       <Footer />
     </div>
   )
