@@ -12,7 +12,7 @@ const Contracts: NextPage = (kip7Data: any) => {
   const [kip7, setKip7] = useState()
 
   const instantiateKlayContract = async () => {
-    const kip7Contract = await caver.contract.create(kip7Data.abi, kip7Data.address)
+    const kip7Contract = new caver.klay.Contract(kip7Data.abi, kip7Data.address)
     setKip7(kip7Contract)
     // console.log('klay contract: ', kip7Contract)
   }

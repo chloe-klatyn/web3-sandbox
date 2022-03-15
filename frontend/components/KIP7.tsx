@@ -1,4 +1,3 @@
-import Caver from 'caver-js'
 import { useForm } from 'react-hook-form'
 import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
@@ -16,7 +15,7 @@ interface props {
 }
 
 const KIP7 = ({ kip7 }: props) => {
-  const { metamaskAddress, kaikasAddress, currentWallet } = useContext(providerContext)
+  const { caver, metamaskAddress, kaikasAddress } = useContext(providerContext)
   const [kip7Balance, setKip7Balance] = useState()
   const [connectedAddress, setConnectedAddress] = useState()
   const {
@@ -36,7 +35,13 @@ const KIP7 = ({ kip7 }: props) => {
   const transferTokens = async () => {
     const receiver = getValues('receivingAddress')
     const sendValue = getValues('sendValue')
-    const txn = await kip7.methods.transfer(receiver, sendValue)
+    const peb = await caver.utils.toPeb(sendValue, 'KLAY')
+    const gasPrice = await caver.klay.getGasPrice()
+    console.log('receiver: ', receiver, 'value:', peb)
+
+    const txn = await kip7.methods
+      .transfer(receiver, sendValue)
+      .send({ from: connectedAddress, gasPrice: gasPrice, gas: '0xBB80' })
     console.log('txn: ', txn)
   }
 
