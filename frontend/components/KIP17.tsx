@@ -26,6 +26,8 @@ const KIP17 = () => {
     }
   }
 
+  const mintToken = async () => {}
+
   return (
     <div className="flex justify-center">
       <div className="space-y-6 w-1/4">
@@ -81,7 +83,10 @@ const KIP17 = () => {
           </div>
         )}
         <div className="flex items-center justify-center pt-5 pb-5">
-          <button className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma">
+          <button
+            className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma"
+            onClick={mintToken}
+          >
             MINT KIP7 TOKEN
           </button>
         </div>

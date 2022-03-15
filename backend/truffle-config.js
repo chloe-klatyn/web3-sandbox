@@ -37,9 +37,6 @@ const testnetApiUrl = process.env.TESTNET_API_URL;
 const kasTestnetApiUrl = process.env.KAS_TESTNET_API_URL;
 const mainnetApiUrl = process.env.MAINNET_API_URL;
 
-console.log("private key: ", process.env.TESTNET_PRIVATE_KEY);
-console.log("baobab: ", process.env.TESTNET_API_URL);
-
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the

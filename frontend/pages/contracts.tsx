@@ -65,10 +65,10 @@ export default Contracts
 export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'deployed')
 
-  const addressPath = path.join(postsDirectory, 'deployedAddress')
+  const addressPath = path.join(postsDirectory, 'kip7TokenAddress')
   const addressContents = await fs.readFile(addressPath, 'utf8')
 
-  const abiPath = path.join(postsDirectory, 'deployedABI')
+  const abiPath = path.join(postsDirectory, 'kip7TokenABI')
   const abiContents = await fs.readFile(abiPath)
   let abi = JSON.parse(abiContents.toString())
 
