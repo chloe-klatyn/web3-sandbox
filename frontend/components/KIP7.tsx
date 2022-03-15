@@ -65,18 +65,12 @@ const KIP7 = ({ kip7 }: props) => {
       />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
-          {/* {metamaskAddress && metamaskBalance && (
+          {connectedAddress && kip7Balance && (
             <>
-              <span>{shortenAddress(metamaskAddress)}</span>
-              <span>{shortenBalance(metamaskBalance)} KLAY</span>
+              <span>{shortenAddress(connectedAddress)}</span>
+              <span>{shortenBalance(kip7Balance)} </span>
             </>
           )}
-          {kaikasAddress && kaikasBalance && (
-            <>
-              <span>{shortenAddress(kaikasAddress)}</span>
-              <span>{shortenBalance(kaikasBalance)} KLAY</span>
-            </>
-          )} */}
         </div>
         <div className="p-4 space-y-4">
           <label className="block">Receiving Address</label>
