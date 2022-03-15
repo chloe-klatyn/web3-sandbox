@@ -9,7 +9,7 @@ Some files were derived from [openzeppelin contracts v2.3.0](https://github.com/
 The following packages should be installed before using this source code.
 
 * git
-* docker
+* docker (Docker should be running in the background)
 * Node v10.21.0
 * Truffle v5.1.61
 * jq (https://stedolan.github.io/jq/)
@@ -43,7 +43,8 @@ To remove log files, run `npm run run:klaytn:cleanlog`.
 ## Deploying a contract to the local network
 
 1. To deploy a contract, please modify [2_contract_migration.js](./contracts/migrations/2_contract_migration.js). The file deploys a KIP7 contract.
-2. Execute the following command to deploy the local network.
+2. To deploy additional contracts add migrations file [3_contract_migration.js] similar to [2_contract_migration.js] to deploy additional contracts
+3. Execute the following command to deploy the local network.
 
 ```bash
 $ npm run deploy:klaytn
