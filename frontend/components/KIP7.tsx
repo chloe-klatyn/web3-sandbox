@@ -33,7 +33,20 @@ const KIP7 = ({ kip7 }: props) => {
     setKip7Balance(userBalance)
   }
 
-  const transferKaikasTokens = async () => {}
+  const transferTokens = async () => {
+    const receiver = getValues('receivingAddress')
+    const sendValue = getValues('sendValue')
+    const txn = await kip7.methods.transfer(receiver, sendValue).call()
+    console.log('txn: ', txn)
+  }
+
+  const validateValue = (input: any) => {
+    if (kip7Balance && input > kip7Balance) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   useEffect(() => {
     if (kaikasAddress) {
@@ -86,28 +99,18 @@ const KIP7 = ({ kip7 }: props) => {
           <input
             className="rounded-md shadow-sm block py-2 px-2 w-full border border-gray-200"
             type="number"
-            // {...register('sendValue', { required: true, validate: validateValue })}
+            {...register('sendValue', { required: true, validate: validateValue })}
           />
           {errors.sendValue && errors.sendValue.type === 'validate' && (
             <div className="text-lightorange">Value is more than balance</div>
           )}
-          {currentWallet === 'Kaikas' ? (
-            <button
-              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-              type="submit"
-              onClick={handleSubmit(transferKaikasTokens)}
-            >
-              Send Tokens
-            </button>
-          ) : (
-            <button
-              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
-              type="submit"
-              // onClick={handleSubmit(transferMetamaskTokens)}
-            >
-              Send Tokens
-            </button>
-          )}
+          <button
+            className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+            type="submit"
+            onClick={handleSubmit(transferTokens)}
+          >
+            Send Tokens
+          </button>
         </div>
       </div>
     </div>
