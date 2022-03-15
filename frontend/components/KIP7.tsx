@@ -36,7 +36,7 @@ const KIP7 = ({ kip7 }: props) => {
   const transferTokens = async () => {
     const receiver = getValues('receivingAddress')
     const sendValue = getValues('sendValue')
-    const txn = await kip7.methods.transfer(receiver, sendValue).call()
+    const txn = await kip7.methods.transfer(receiver, sendValue)
     console.log('txn: ', txn)
   }
 
@@ -81,7 +81,7 @@ const KIP7 = ({ kip7 }: props) => {
           {connectedAddress && kip7Balance && (
             <>
               <span>{shortenAddress(connectedAddress)}</span>
-              <span>{shortenBalance(kip7Balance)} </span>
+              <span>{shortenBalance(kip7Balance).toLocaleString()} </span>
             </>
           )}
         </div>
