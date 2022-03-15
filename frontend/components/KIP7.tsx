@@ -16,16 +16,9 @@ interface props {
 }
 
 const KIP7 = ({ kip7 }: props) => {
-  const {
-    web3,
-    caver,
-    ethProvider,
-    klaytnProvider,
-    metamaskAddress,
-    kaikasAddress,
-    currentWallet,
-  } = useContext(providerContext)
-
+  const { metamaskAddress, kaikasAddress, currentWallet } = useContext(providerContext)
+  const [kip7Balance, setKip7Balance] = useState()
+  const [connectedAddress, setConnectedAddress] = useState()
   const {
     register,
     handleSubmit,
@@ -34,21 +27,28 @@ const KIP7 = ({ kip7 }: props) => {
     formState: { errors },
   } = useForm<FormData>()
 
-  console.log('kip7 props: ', kip7)
-
-  const getContractData = async () => {
-    const userBalance = await kip7.methods.balanceOf(kaikasAddress).call()
-    console.log('balance: ', userBalance)
-    // const name = await kip7.name()
-    // const supply = await kip7.supply()
-    // console.log('name: ', name, 'supply: ', supply)
+  const getWalletBalance = async () => {
+    const userBalance = await kip7.methods.balanceOf(connectedAddress).call()
+    console.log('wallet balance: ', userBalance)
+    setKip7Balance(userBalance)
   }
 
+  const transferKaikasTokens = async () => {}
+
   useEffect(() => {
-    if (kip7) {
-      getContractData()
+    if (kaikasAddress) {
+      setConnectedAddress(kaikasAddress)
     }
-  }, [kip7])
+    if (metamaskAddress) {
+      setConnectedAddress(metamaskAddress)
+    }
+  }, [kaikasAddress, metamaskAddress])
+
+  useEffect(() => {
+    if (kip7 && connectedAddress) {
+      getWalletBalance()
+    }
+  }, [kip7, connectedAddress])
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -101,7 +101,7 @@ const KIP7 = ({ kip7 }: props) => {
             <button
               className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
               type="submit"
-              // onClick={handleSubmit(transferKaikasTokens)}
+              onClick={handleSubmit(transferKaikasTokens)}
             >
               Send Tokens
             </button>
