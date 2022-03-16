@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import providerContext from '../context/context'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { shortenAddress, shortenBalance, validateAddress, sleep } from '../helpers'
+import { shortenAddress, shortenBalance, validateAddress } from '../helpers'
 
 type FormData = {
   receivingAddress: string
@@ -17,6 +17,7 @@ interface props {
 const KIP7 = ({ kip7 }: props) => {
   const { caver, metamaskAddress, kaikasAddress } = useContext(providerContext)
   const [kip7Balance, setKip7Balance] = useState()
+  const [tokenSymbol, setTokenSymbol] = useState()
   const [connectedAddress, setConnectedAddress] = useState()
   const {
     register,
@@ -30,6 +31,13 @@ const KIP7 = ({ kip7 }: props) => {
     const userBalance = await kip7.methods.balanceOf(connectedAddress).call()
     console.log('wallet balance: ', userBalance)
     setKip7Balance(userBalance)
+  }
+
+  const getTokenInfo = async () => {
+    const name = await kip7.methods.name().call()
+    const symbol = await kip7.methods.symbol().call()
+    setTokenSymbol(symbol)
+    console.log('name: ', name, 'symbol:', symbol)
   }
 
   const transferTokens = async () => {
@@ -81,6 +89,7 @@ const KIP7 = ({ kip7 }: props) => {
   useEffect(() => {
     if (kip7 && connectedAddress) {
       getWalletBalance()
+      getTokenInfo()
     }
   }, [kip7, connectedAddress])
 
@@ -99,10 +108,12 @@ const KIP7 = ({ kip7 }: props) => {
       />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
-          {connectedAddress && kip7Balance && (
+          {connectedAddress && kip7Balance && tokenSymbol && (
             <>
               <span>{shortenAddress(connectedAddress)}</span>
-              <span>{shortenBalance(kip7Balance).toLocaleString()} </span>
+              <span>
+                {shortenBalance(kip7Balance).toLocaleString()} {tokenSymbol}
+              </span>
             </>
           )}
         </div>
