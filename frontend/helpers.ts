@@ -1,5 +1,5 @@
 export const shortenAddress = (str: any) => {
-  return str.substring(0, 6) + '...' + str.substring(str.length - 4)
+  return str.substring(0, 5) + '...' + str.substring(str.length - 3)
 }
 
 export const shortenBalance = (str: any) => {

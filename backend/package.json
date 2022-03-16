@@ -27,7 +27,7 @@
     "deploy:cypress": "truffle deploy --network cypress"
   },
   "dependencies": {
-    "caver-js": "^1.5.0",
+    "caver-js": "^1.8.0",
     "caver-js-ext-kas": "^1.0.1",
     "dotenv": "^16.0.0",
     "truffle-hdwallet-provider-klaytn": "^1.0.13-a"
