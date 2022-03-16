@@ -9,6 +9,8 @@ contract KIP7Token is KIP7 {
         uint8 decimals,
         uint256 initialSupply
     ) {
+        _name = name;
+        _symbol = symbol;
         _mint(msg.sender, initialSupply);
     }
 }
