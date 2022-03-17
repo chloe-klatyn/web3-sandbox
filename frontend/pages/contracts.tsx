@@ -81,25 +81,48 @@ export default Contracts
 
 export async function getStaticProps() {
   const contractsDirectory = path.join(process.cwd(), 'deployed')
+  let kip7address
+  let kip7abi
+  let kip17address
+  let kip17abi
+  let kip37address
+  let kip37abi
+  let props = {}
 
-  const kip7addressPath = path.join(contractsDirectory, 'kip7TokenAddress')
-  const kip7addressContents = await fs.readFile(kip7addressPath, 'utf8')
-  const kip7abiPath = path.join(contractsDirectory, 'kip7TokenABI')
-  const kip7abiContents = await fs.readFile(kip7abiPath)
-  let kip7abi = JSON.parse(kip7abiContents.toString())
+  try {
+    const kip7addressPath = path.join(contractsDirectory, 'kip7TokenAddress')
+    kip7address = await fs.readFile(kip7addressPath, 'utf8')
+    const kip7abiPath = path.join(contractsDirectory, 'kip7TokenABI')
+    const kip7abiContents = await fs.readFile(kip7abiPath)
+    kip7abi = JSON.parse(kip7abiContents.toString())
+    props = { ...props, kip7address: kip7address, kip7abi: kip7abi }
+  } catch (err) {
+    console.log('error fetching kip7', err)
+  }
 
-  const kip17addressPath = path.join(contractsDirectory, 'kip17TokenAddress')
-  const kip17addressContents = await fs.readFile(kip17addressPath, 'utf8')
-  const kip17abiPath = path.join(contractsDirectory, 'kip17TokenABI')
-  const kip17abiContents = await fs.readFile(kip17abiPath)
-  let kip17abi = JSON.parse(kip17abiContents.toString())
+  try {
+    const kip17addressPath = path.join(contractsDirectory, 'kip17TokenAddress')
+    kip17address = await fs.readFile(kip17addressPath, 'utf8')
+    const kip17abiPath = path.join(contractsDirectory, 'kip17TokenABI')
+    const kip17abiContents = await fs.readFile(kip17abiPath)
+    kip17abi = JSON.parse(kip17abiContents.toString())
+    props = { ...props, kip17address: kip17address, kip17abi: kip17abi }
+  } catch (err) {
+    console.log('error fetching kip17', err)
+  }
+
+  try {
+    const kip37addressPath = path.join(contractsDirectory, 'kip37TokenAddress')
+    kip37address = await fs.readFile(kip37addressPath, 'utf8')
+    const kip37abiPath = path.join(contractsDirectory, 'kip37TokenABI')
+    const kip37abiContents = await fs.readFile(kip37abiPath)
+    kip37abi = JSON.parse(kip37abiContents.toString())
+    props = { ...props, kip37address: kip37address, kip37abi: kip37abi }
+  } catch (err) {
+    console.log('error fetching ki317', err)
+  }
 
   return {
-    props: {
-      kip7address: kip7addressContents,
-      kip7abi: kip7abi,
-      kip17address: kip17addressContents,
-      kip17abi: kip17abi,
-    },
+    props,
   }
 }

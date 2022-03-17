@@ -1,15 +1,58 @@
+import { useForm } from 'react-hook-form'
 import { create } from 'ipfs-http-client'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import providerContext from '../context/context'
 
 const url: string | any = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
+
+type FormData = {
+  name: string
+  description: string
+  image: string
+  quantity: number
+}
 
 interface props {
   kip37: any
 }
 
 const KIP37 = ({ kip37 }: props) => {
+  const { kaikasAddress } = useContext(providerContext)
   const [imageURL, setImageURL] = useState('')
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>()
+
+  const mintToken = async () => {
+    console.log('kip37: ', kip37)
+    console.log('address: ', kaikasAddress)
+    if (!kip37) {
+      alert('Please connect your Kaikas wallet')
+    } else {
+      const name = getValues('name')
+      const description = getValues('description')
+      const image = getValues('image')
+      const quantity = getValues('quantity')
+      const metadata = { name: name, description: description, image: image, quantity: quantity }
+      console.log('metadata: ', metadata)
+      if (!metadata.name || !metadata.description || !metadata.image || !metadata.quantity) {
+        alert('Please do not leave any fields blank.')
+        return
+      }
+      const { cid } = await client.add({ content: JSON.stringify(metadata) })
+      const uri = `https://ipfs.infura.io/ipfs/${cid}`
+      console.log('token URI: ', uri)
+      const mintTxn = await kip37.methods
+        .mintNFT(uri, quantity)
+        .send({ from: kaikasAddress, gas: '0xF4240' })
+      console.log('mint txn: ', mintTxn)
+    }
+  }
 
   const onFileUpload = async (e: any) => {
     const file = e.target.files[0]
@@ -25,12 +68,11 @@ const KIP37 = ({ kip37 }: props) => {
       const url = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('ipfs url: ', url)
       setImageURL(url)
+      setValue('image', url)
     } catch (e) {
       console.error('Error uploading file: ', e)
     }
   }
-
-  const mintToken = async () => {}
 
   return (
     <div className="flex justify-center">
@@ -41,7 +83,7 @@ const KIP37 = ({ kip37 }: props) => {
           <input
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
             type="text"
-            name="name"
+            {...register('name', { required: true })}
           />
         </div>
         <div className="grid grid-cols-1">
@@ -50,7 +92,16 @@ const KIP37 = ({ kip37 }: props) => {
           </label>
           <textarea
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
-            name="description"
+            {...register('description', { required: true })}
+          />
+        </div>
+        <div className="grid grid-cols-1">
+          <label className="md:text-sm text-xs text-gray-500 font-body tracking-wider">
+            Quantity
+          </label>
+          <textarea
+            className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
+            {...register('quantity', { required: true })}
           />
         </div>
         {imageURL ? (
@@ -89,7 +140,7 @@ const KIP37 = ({ kip37 }: props) => {
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma"
-            onClick={mintToken}
+            onClick={handleSubmit(mintToken)}
           >
             MINT KIP7 TOKEN
           </button>

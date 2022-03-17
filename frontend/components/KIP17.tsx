@@ -17,8 +17,7 @@ interface props {
 }
 
 const KIP17 = ({ kip17 }: props) => {
-  const { kaikasAddress, klaytnProvider } = useContext(providerContext)
-
+  const { kaikasAddress } = useContext(providerContext)
   const [imageURL, setImageURL] = useState('')
   const {
     register,
