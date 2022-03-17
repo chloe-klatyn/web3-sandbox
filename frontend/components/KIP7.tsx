@@ -108,12 +108,17 @@ const KIP7 = ({ kip7 }: props) => {
       />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
-          {connectedAddress && kip7Balance && tokenSymbol && (
+          {connectedAddress && kip7Balance && tokenSymbol ? (
             <>
               <span>{shortenAddress(connectedAddress)}</span>
               <span>
                 {shortenBalance(kip7Balance).toLocaleString()} {tokenSymbol}
               </span>
+            </>
+          ) : (
+            <>
+              <span>{shortenAddress('0x0000000000')}</span>
+              <span>0.0</span>
             </>
           )}
         </div>
