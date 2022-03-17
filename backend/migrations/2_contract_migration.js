@@ -10,7 +10,7 @@ module.exports = function (deployer) {
       });
       // Save abi file to deployedABI.
       fs.writeFile(
-        "../frontend/deployed/kip17TokenABI",
+        "../frontend/deployed/kip37TokenABI",
         JSON.stringify(kip37Token._json.abi, 2),
         (err) => {
           if (err) throw err;
@@ -21,7 +21,7 @@ module.exports = function (deployer) {
       );
     }
     fs.writeFile(
-      "../frontend/deployed/kip17TokenAddress",
+      "../frontend/deployed/kip37TokenAddress",
       kip37Token.address,
       (err) => {
         if (err) throw err;
