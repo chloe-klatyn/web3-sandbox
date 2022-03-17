@@ -50,7 +50,7 @@ const KIP7 = ({ kip7 }: props) => {
     try {
       const txn = await kip7.methods
         .transfer(receiver, sendValue)
-        .send({ from: connectedAddress, gasPrice: gasPrice, gas: '0xBB80' })
+        .send({ from: connectedAddress, gasPrice: gasPrice, gas: '0xF4240' })
       console.log('txn: ', txn)
       toast.update(id, {
         render: 'Tokens sent successfully',

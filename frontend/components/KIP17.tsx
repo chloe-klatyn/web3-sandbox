@@ -17,7 +17,7 @@ interface props {
 }
 
 const KIP17 = ({ kip17 }: props) => {
-  const { currentWallet, klaytnProvider } = useContext(providerContext)
+  const { kaikasAddress, klaytnProvider } = useContext(providerContext)
 
   const [imageURL, setImageURL] = useState('')
   const {
@@ -28,11 +28,11 @@ const KIP17 = ({ kip17 }: props) => {
     formState: { errors },
   } = useForm<FormData>()
 
-  console.log('kip17: ', kip17)
-
   const mintToken = async () => {
+    console.log('kip17: ', kip17)
+    console.log('address: ', kaikasAddress)
     if (!kip17) {
-      await klaytnProvider.enable()
+      alert('Please connect your Kaikas wallet')
     } else {
       const name = getValues('name')
       const description = getValues('description')
@@ -46,7 +46,10 @@ const KIP17 = ({ kip17 }: props) => {
       const { cid } = await client.add({ content: JSON.stringify(metadata) })
       const uri = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('token URI: ', uri)
-      // const mintTxn = await kip17.methods.mintNFT(currentWallet, uri).send()
+      const mintTxn = await kip17.methods
+        .mintNFT(kaikasAddress, uri)
+        .send({ from: kaikasAddress, gas: '0xF4240' })
+      console.log('mint txn: ', mintTxn)
     }
   }
 
