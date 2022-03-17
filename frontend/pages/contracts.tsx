@@ -14,27 +14,31 @@ const Contracts: NextPage = (contractData: any) => {
   const [kip17, setKip17] = useState()
   const [kip37, setKip37] = useState()
 
-  const instantiateKlayContract = async () => {
+  const instantiateKlayContracts = async () => {
     const kip7Contract = new caver.klay.Contract(contractData.kip7abi, contractData.kip7address)
     setKip7(kip7Contract)
+    const kip17Contract = new caver.klay.Contract(contractData.kip17abi, contractData.kip17address)
+    setKip17(kip17Contract)
     // console.log('klay contract: ', kip7Contract)
   }
 
-  const instantiateEthContract = async () => {
+  const instantiateEthContracts = async () => {
     const kip7Contract = new web3.eth.Contract(contractData.kip7abi, contractData.kip7address)
     setKip7(kip7Contract)
+    const kip17Contract = new web3.eth.Contract(contractData.kip17abi, contractData.kip17address)
+    setKip7(kip17Contract)
     // console.log('eth contract: ', kip7Contract)
   }
 
   useEffect(() => {
     if (web3) {
-      instantiateEthContract()
+      instantiateEthContracts()
     }
   }, [web3])
 
   useEffect(() => {
     if (caver) {
-      instantiateKlayContract()
+      instantiateKlayContracts()
     }
   }, [caver])
 

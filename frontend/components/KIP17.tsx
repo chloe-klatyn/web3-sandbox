@@ -1,15 +1,54 @@
+import { useForm } from 'react-hook-form'
 import { create } from 'ipfs-http-client'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import providerContext from '../context/context'
 
 const url: string | any = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
+
+type FormData = {
+  name: string
+  description: string
+  image: string
+}
 
 interface props {
   kip17: any
 }
 
 const KIP17 = ({ kip17 }: props) => {
+  const { currentWallet, klaytnProvider } = useContext(providerContext)
+
   const [imageURL, setImageURL] = useState('')
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>()
+
+  console.log('kip17: ', kip17)
+
+  const mintToken = async () => {
+    if (!kip17) {
+      await klaytnProvider.enable()
+    } else {
+      const name = getValues('name')
+      const description = getValues('description')
+      const image = getValues('image')
+      const metadata = { name: name, description: description, image: image }
+      console.log('metadata: ', metadata)
+      if (!metadata.name || !metadata.description || !metadata.image) {
+        alert('Please do not leave any fields blank.')
+        return
+      }
+      const { cid } = await client.add({ content: JSON.stringify(metadata) })
+      const uri = `https://ipfs.infura.io/ipfs/${cid}`
+      console.log('token URI: ', uri)
+      // const mintTxn = await kip17.methods.mintNFT(currentWallet, uri).send()
+    }
+  }
 
   const onFileUpload = async (e: any) => {
     const file = e.target.files[0]
@@ -25,12 +64,11 @@ const KIP17 = ({ kip17 }: props) => {
       const url = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('ipfs url: ', url)
       setImageURL(url)
+      setValue('image', url)
     } catch (e) {
       console.error('Error uploading file: ', e)
     }
   }
-
-  const mintToken = async () => {}
 
   return (
     <div className="flex justify-center">
@@ -41,7 +79,7 @@ const KIP17 = ({ kip17 }: props) => {
           <input
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
             type="text"
-            name="name"
+            {...register('name', { required: true })}
           />
         </div>
         <div className="grid grid-cols-1">
@@ -50,7 +88,7 @@ const KIP17 = ({ kip17 }: props) => {
           </label>
           <textarea
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
-            name="description"
+            {...register('description', { required: true })}
           />
         </div>
         {imageURL ? (
