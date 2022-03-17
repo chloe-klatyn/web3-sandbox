@@ -5,10 +5,10 @@ const url: string | any = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
 
 interface props {
-  kip17: any
+  kip37: any
 }
 
-const KIP17 = ({ kip17 }: props) => {
+const KIP37 = ({ kip37 }: props) => {
   const [imageURL, setImageURL] = useState('')
 
   const onFileUpload = async (e: any) => {
@@ -99,4 +99,4 @@ const KIP17 = ({ kip17 }: props) => {
   )
 }
 
-export default KIP17
+export default KIP37
