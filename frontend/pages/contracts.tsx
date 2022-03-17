@@ -6,19 +6,19 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import providerContext from '../context/context'
 
-const Contracts: NextPage = (kip7Data: any) => {
+const Contracts: NextPage = (contractData: any) => {
   const [currentContract, setCurrentContract] = useState('KIP7')
   const { web3, caver } = useContext(providerContext)
   const [kip7, setKip7] = useState()
 
   const instantiateKlayContract = async () => {
-    const kip7Contract = new caver.klay.Contract(kip7Data.abi, kip7Data.address)
+    const kip7Contract = new caver.klay.Contract(contractData.kip7abi, contractData.kip7address)
     setKip7(kip7Contract)
     // console.log('klay contract: ', kip7Contract)
   }
 
   const instantiateEthContract = async () => {
-    const kip7Contract = new web3.eth.Contract(kip7Data.abi, kip7Data.address)
+    const kip7Contract = new web3.eth.Contract(contractData.kip7abi, contractData.kip7address)
     setKip7(kip7Contract)
     // console.log('eth contract: ', kip7Contract)
   }
@@ -63,19 +63,19 @@ const Contracts: NextPage = (kip7Data: any) => {
 export default Contracts
 
 export async function getStaticProps() {
-  const postsDirectory = path.join(process.cwd(), 'deployed')
+  const contractsDirectory = path.join(process.cwd(), 'deployed')
 
-  const addressPath = path.join(postsDirectory, 'kip7TokenAddress')
-  const addressContents = await fs.readFile(addressPath, 'utf8')
+  const kip7addressPath = path.join(contractsDirectory, 'kip7TokenAddress')
+  const kip7addressContents = await fs.readFile(kip7addressPath, 'utf8')
 
-  const abiPath = path.join(postsDirectory, 'kip7TokenABI')
-  const abiContents = await fs.readFile(abiPath)
-  let abi = JSON.parse(abiContents.toString())
+  const kip7abiPath = path.join(contractsDirectory, 'kip7TokenABI')
+  const kip7abiContents = await fs.readFile(kip7abiPath)
+  let kip7abi = JSON.parse(kip7abiContents.toString())
 
   return {
     props: {
-      address: addressContents,
-      abi: abi,
+      kip7address: kip7addressContents,
+      kip7abi: kip7abi,
     },
   }
 }
