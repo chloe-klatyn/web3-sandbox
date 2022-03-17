@@ -42,7 +42,7 @@ To remove log files, run `npm run run:klaytn:cleanlog`.
 
 ## Deploying a contract to the local network
 
-1. To deploy a contract, please modify [2_contract_migration.js](./contracts/migrations/2_contract_migration.js). The file deploys a KIP7 contract.
+1. To deploy a contract, please modify [2_contract_migration.js](./contracts/migrations/2_contract_migration.js). The file deploys a KIP37 contract.
 2. To deploy additional contracts add migrations file [3_contract_migration.js] similar to [2_contract_migration.js] to deploy additional contracts
 3. Execute the following command to deploy the local network.
 
