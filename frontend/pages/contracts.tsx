@@ -42,7 +42,7 @@ const Contracts: NextPage = (contractData: any) => {
     <div className="mt-10">
       <div className="flex justify-center space-x-10 text-2xl font-bold">
         <button
-          className="border-b-2 border-white hover:border-b-2 hover:border-grey"
+          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
           onClick={() => {
             setCurrentContract('KIP7')
           }}
@@ -50,12 +50,20 @@ const Contracts: NextPage = (contractData: any) => {
           KIP7
         </button>
         <button
-          className="border-b-2 border-white hover:border-b-2 hover:border-grey"
+          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
           onClick={() => {
             setCurrentContract('KIP17')
           }}
         >
           KIP17
+        </button>
+        <button
+          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+          onClick={() => {
+            setCurrentContract('KIP37')
+          }}
+        >
+          KIP37
         </button>
       </div>
       <div className="mt-20">{currentContract === 'KIP7' && <KIP7 kip7={kip7} />}</div>
