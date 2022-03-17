@@ -84,6 +84,9 @@ const KIP17 = ({ kip17 }: props) => {
             type="text"
             {...register('name', { required: true })}
           />
+          {errors.name && (
+            <div className="text-lightorange">Please do not leave this field blank</div>
+          )}
         </div>
         <div className="grid grid-cols-1">
           <label className="md:text-sm text-xs text-gray-500 font-body tracking-wider">
@@ -93,6 +96,9 @@ const KIP17 = ({ kip17 }: props) => {
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
             {...register('description', { required: true })}
           />
+          {errors.description && (
+            <div className="text-lightorange">Please do not leave this field blank</div>
+          )}
         </div>
         {imageURL ? (
           <img src={imageURL} width="400px" height="400px" />
@@ -125,12 +131,15 @@ const KIP17 = ({ kip17 }: props) => {
                 onChange={onFileUpload}
               />
             </label>
+            {errors.image && (
+              <div className="text-lightorange">Please do not leave this field blank</div>
+            )}
           </div>
         )}
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma"
-            onClick={mintToken}
+            onClick={handleSubmit(mintToken)}
           >
             MINT KIP7 TOKEN
           </button>
