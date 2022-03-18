@@ -65,10 +65,10 @@ const Contracts: NextPage = ({
 
   return (
     <div className="mt-10">
-      <div className="flex justify-center space-x-10 text-2xl font-bold">
+      <div className="flex justify-center space-x-10 text-2xl font-bold text-gray-800">
         {currentContract === 'KIP7' ? (
           <button
-            className="border-b-2 border-white border-b-2 border-grey"
+            className="border-b-2 border-white border-grey bg-gray-100 px-3 py-1 rounded-md"
             onClick={() => {
               setCurrentContract('KIP7')
             }}
@@ -77,7 +77,7 @@ const Contracts: NextPage = ({
           </button>
         ) : (
           <button
-            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            className="border-b-2 border-white px-3 py-1 hover:bg-gray-100 rounded-md"
             onClick={() => {
               setCurrentContract('KIP7')
             }}
@@ -87,7 +87,7 @@ const Contracts: NextPage = ({
         )}
         {currentContract === 'KIP17' ? (
           <button
-            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            className="border-b-2 border-white border-grey bg-gray-100 px-3 py-1 rounded-md"
             onClick={() => {
               setCurrentContract('KIP17')
             }}
@@ -96,7 +96,7 @@ const Contracts: NextPage = ({
           </button>
         ) : (
           <button
-            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            className="border-b-2 border-white px-3 py-1 hover:bg-gray-100 rounded-md"
             onClick={() => {
               setCurrentContract('KIP17')
             }}
@@ -106,7 +106,7 @@ const Contracts: NextPage = ({
         )}
         {currentContract === 'KIP37' ? (
           <button
-            className="border-b-2 border-white border-b-2 border-grey"
+            className="border-b-2 border-white border-grey bg-gray-100 px-3 py-1 rounded-md"
             onClick={() => {
               setCurrentContract('KIP37')
             }}
@@ -115,7 +115,7 @@ const Contracts: NextPage = ({
           </button>
         ) : (
           <button
-            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            className="border-b-2 border-white px-3 py-1 hover:bg-gray-100 rounded-md"
             onClick={() => {
               setCurrentContract('KIP37')
             }}
