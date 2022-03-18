@@ -170,10 +170,15 @@ const Transfer = () => {
       />
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
-          {metamaskAddress && metamaskBalance && (
+          {metamaskAddress && metamaskBalance ? (
             <>
               <span>{shortenAddress(metamaskAddress)}</span>
               <span>{shortenBalance(metamaskBalance)} KLAY</span>
+            </>
+          ) : (
+            <>
+              <span>{shortenAddress('0x0000000000')}</span>
+              <span>0.0</span>
             </>
           )}
           {kaikasAddress && kaikasBalance && (
@@ -205,19 +210,19 @@ const Transfer = () => {
           )}
           {currentWallet === 'Kaikas' ? (
             <button
-              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+              className="flex font-light items-center rounded-full bg-magma px-4 py-2 text-white"
               type="submit"
               onClick={handleSubmit(transferKaikasTokens)}
             >
-              Send Tokens
+              Send KLAY
             </button>
           ) : (
             <button
-              className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+              className="flex font-light items-center rounded-full bg-magma px-4 py-2 text-white"
               type="submit"
               onClick={handleSubmit(transferMetamaskTokens)}
             >
-              Send Tokens
+              Send KLAY
             </button>
           )}
         </div>

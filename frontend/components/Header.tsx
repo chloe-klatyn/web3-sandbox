@@ -165,9 +165,6 @@ const Header = () => {
                 ? shortenBalance(kaikasBalance)
                 : metamaskBalance && shortenBalance(metamaskBalance)}{' '}
               KLAY
-              <Link href="/transfers">
-                <SwitchHorizontalIcon className="w-5 h-5 ml-2 text-slate-700 cursor-pointer" />
-              </Link>
             </div>
             <div className="xl:w-84">
               <select
