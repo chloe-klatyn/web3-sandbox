@@ -66,30 +66,63 @@ const Contracts: NextPage = ({
   return (
     <div className="mt-10">
       <div className="flex justify-center space-x-10 text-2xl font-bold">
-        <button
-          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
-          onClick={() => {
-            setCurrentContract('KIP7')
-          }}
-        >
-          KIP7
-        </button>
-        <button
-          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
-          onClick={() => {
-            setCurrentContract('KIP17')
-          }}
-        >
-          KIP17
-        </button>
-        <button
-          className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
-          onClick={() => {
-            setCurrentContract('KIP37')
-          }}
-        >
-          KIP37
-        </button>
+        {currentContract === 'KIP7' ? (
+          <button
+            className="border-b-2 border-white border-b-2 border-grey"
+            onClick={() => {
+              setCurrentContract('KIP7')
+            }}
+          >
+            KIP7
+          </button>
+        ) : (
+          <button
+            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            onClick={() => {
+              setCurrentContract('KIP7')
+            }}
+          >
+            KIP7
+          </button>
+        )}
+        {currentContract === 'KIP17' ? (
+          <button
+            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            onClick={() => {
+              setCurrentContract('KIP17')
+            }}
+          >
+            KIP17
+          </button>
+        ) : (
+          <button
+            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            onClick={() => {
+              setCurrentContract('KIP17')
+            }}
+          >
+            KIP17
+          </button>
+        )}
+        {currentContract === 'KIP37' ? (
+          <button
+            className="border-b-2 border-white border-b-2 border-grey"
+            onClick={() => {
+              setCurrentContract('KIP37')
+            }}
+          >
+            KIP37
+          </button>
+        ) : (
+          <button
+            className="border-b-2 border-white hover:border-b-2 hover:border-grey focus:border-grey"
+            onClick={() => {
+              setCurrentContract('KIP37')
+            }}
+          >
+            KIP37
+          </button>
+        )}
       </div>
       <div className="mt-20">{currentContract === 'KIP7' && <KIP7 kip7={kip7} />}</div>
       <div className="mt-20">{currentContract === 'KIP17' && <KIP17 kip17={kip17} />}</div>
