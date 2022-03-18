@@ -3,11 +3,9 @@ import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
 import Image from 'next/image'
-import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
+import { DocumentDuplicateIcon } from '@heroicons/react/outline'
 import { shortenAddress, shortenBalance } from '../helpers'
 import Subheader from './Subheader'
-import Web3 from 'web3'
-import Caver from 'caver-js'
 import brandImg from '../public/brandmark.svg'
 
 const networks = ['Baobab', 'Cypress']
@@ -113,7 +111,6 @@ const Header = () => {
   }
 
   const getKaikasBalance = async () => {
-    const caver = new Caver(klaytnProvider)
     const account = klaytnProvider.selectedAddress
     setKaikasAddress(account)
     const balance = await caver.klay.getBalance(account)
