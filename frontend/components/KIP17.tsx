@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { create } from 'ipfs-http-client'
 import { useState, useContext } from 'react'
 import providerContext from '../context/context'
+import Spinner from '../components/Spinner'
 
 const url: string | any = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
@@ -19,6 +20,7 @@ interface props {
 const KIP17 = ({ kip17 }: props) => {
   const { kaikasAddress } = useContext(providerContext)
   const [imageURL, setImageURL] = useState('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -36,12 +38,12 @@ const KIP17 = ({ kip17 }: props) => {
       const name = getValues('name')
       const description = getValues('description')
       const image = getValues('image')
-      const metadata = { name: name, description: description, image: image }
-      console.log('metadata: ', metadata)
-      if (!metadata.name || !metadata.description || !metadata.image) {
+      if (!name || !description || !image) {
         alert('Please do not leave any fields blank.')
         return
       }
+      const metadata = { name: name, description: description, image: image }
+      console.log('metadata: ', metadata)
       const { cid } = await client.add({ content: JSON.stringify(metadata) })
       const uri = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('token URI: ', uri)
@@ -55,6 +57,7 @@ const KIP17 = ({ kip17 }: props) => {
   const onFileUpload = async (e: any) => {
     const file = e.target.files[0]
     try {
+      setIsLoading(true)
       console.log(`adding ${file.name} to ipfs....`)
       const { cid } = await client.add(
         { content: file },
@@ -67,6 +70,7 @@ const KIP17 = ({ kip17 }: props) => {
       console.log('ipfs url: ', url)
       setImageURL(url)
       setValue('image', url)
+      setIsLoading(false)
     } catch (e) {
       console.error('Error uploading file: ', e)
     }
@@ -135,6 +139,14 @@ const KIP17 = ({ kip17 }: props) => {
             )}
           </div>
         )}
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        ) : (
+          ''
+        )}
+
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full "

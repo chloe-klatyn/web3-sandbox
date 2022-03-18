@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { create } from 'ipfs-http-client'
 import { useState, useContext } from 'react'
 import providerContext from '../context/context'
+import Spinner from '../components/Spinner'
 
 const url: string | any = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
@@ -107,6 +108,7 @@ const KIP37 = ({ kip37 }: props) => {
             {...register('quantity', { required: true })}
           />
         </div>
+
         {imageURL ? (
           <img src={imageURL} width="400px" height="400px" />
         ) : (
@@ -140,6 +142,9 @@ const KIP37 = ({ kip37 }: props) => {
             </label>
           </div>
         )}
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full"
