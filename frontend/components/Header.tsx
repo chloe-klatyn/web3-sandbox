@@ -2,11 +2,13 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import WalletModal from './WalletModal'
 import providerContext from '../context/context'
+import Image from 'next/image'
 import { SwitchHorizontalIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
 import { shortenAddress, shortenBalance } from '../helpers'
 import Subheader from './Subheader'
 import Web3 from 'web3'
 import Caver from 'caver-js'
+import brandImg from '../public/brandmark.svg'
 
 const networks = ['Baobab', 'Cypress']
 
@@ -156,14 +158,16 @@ const Header = () => {
           setMetamaskConnected={setMetamaskConnected}
         />
         <Link href="/">
-          <a className="mx-10 text-xl">Klaytn Starter Kit</a>
+          <a className="mx-5 text-xl">
+            <Image src={brandImg} alt="Logo" width="150px" height="35px" />
+          </a>
         </Link>
         <ul className="flex items-right">
           <div className="flex justify-center items-center">
             <div className="mx-6 flex">
               {currentWallet === 'Kaikas' && kaikasBalance
                 ? shortenBalance(kaikasBalance)
-                : metamaskBalance && shortenBalance(metamaskBalance)}{' '}
+                : metamaskBalance && shortenBalance(metamaskBalance)}
               KLAY
             </div>
             <div className="xl:w-84">

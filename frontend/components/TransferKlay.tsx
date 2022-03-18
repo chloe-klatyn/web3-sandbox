@@ -168,7 +168,7 @@ const Transfer = () => {
         draggable
         pauseOnHover
       />
-      <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3">
+      <div className="place-content-center font-body mb-6 tracking-widest shadow w-1/3 rounded-lg bg-gray-100">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
           {metamaskAddress && metamaskBalance ? (
             <>
@@ -188,7 +188,7 @@ const Transfer = () => {
             </>
           )}
         </div>
-        <div className="p-4 space-y-4">
+        <div className="p-4 space-y-4 rounded-lg">
           <label className="block">Receiving Address</label>
           <input
             className="rounded-md shadow-sm block py-2 px-2 w-full border border-gray-200"

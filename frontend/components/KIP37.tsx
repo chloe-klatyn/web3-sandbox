@@ -27,7 +27,6 @@ const KIP37 = ({ kip37 }: props) => {
     setValue,
     formState: { errors },
   } = useForm<FormData>()
-  console.log('kip37: ', kip37)
 
   const mintToken = async () => {
     console.log('kip37: ', kip37)
