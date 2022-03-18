@@ -99,7 +99,10 @@ const KIP37 = ({ kip37 }: props) => {
           <label className="md:text-sm text-xs text-gray-500 font-body tracking-wider">
             Quantity
           </label>
-          <textarea
+          <input
+            type="number"
+            min="1"
+            step="1"
             className="text-gray-500 border border-gray-400 px-4 py-2 outline-none rounded-md mt-2"
             {...register('quantity', { required: true })}
           />
@@ -139,7 +142,7 @@ const KIP37 = ({ kip37 }: props) => {
         )}
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
-            className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full text-xs"
+            className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full"
             onClick={handleSubmit(mintToken)}
           >
             MINT KIP37 TOKEN

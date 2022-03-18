@@ -164,7 +164,7 @@ const Header = () => {
             <div className="mx-6 flex">
               {currentWallet === 'Kaikas' && kaikasBalance
                 ? shortenBalance(kaikasBalance)
-                : metamaskBalance && shortenBalance(metamaskBalance)}
+                : metamaskBalance && shortenBalance(metamaskBalance)}{' '}
               KLAY
             </div>
             <div className="xl:w-84">
