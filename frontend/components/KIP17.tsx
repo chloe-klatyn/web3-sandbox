@@ -30,8 +30,6 @@ const KIP17 = ({ kip17 }: props) => {
   } = useForm<FormData>()
 
   const mintToken = async () => {
-    console.log('kip17: ', kip17)
-    console.log('address: ', kaikasAddress)
     if (!kip17) {
       alert('Please connect your Kaikas wallet')
     } else {
@@ -104,7 +102,9 @@ const KIP17 = ({ kip17 }: props) => {
           )}
         </div>
         {imageURL ? (
-          <img src={imageURL} width="400px" height="400px" />
+          <div className="flex justify-center">
+            <img src={imageURL} width="300px" height="300px" />
+          </div>
         ) : (
           <div className="flex items-center justify-center w-full mt-2">
             <label className="flex flex-col border-2 border-dashed border-gray-400 w-full rounded-lg h-32 group">
@@ -139,14 +139,11 @@ const KIP17 = ({ kip17 }: props) => {
             )}
           </div>
         )}
-        {isLoading ? (
+        {isLoading && (
           <div className="flex justify-center">
             <Spinner />
           </div>
-        ) : (
-          ''
         )}
-
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full "

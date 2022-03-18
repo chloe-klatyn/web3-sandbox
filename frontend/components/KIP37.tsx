@@ -21,6 +21,7 @@ interface props {
 const KIP37 = ({ kip37 }: props) => {
   const { kaikasAddress } = useContext(providerContext)
   const [imageURL, setImageURL] = useState('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -30,8 +31,6 @@ const KIP37 = ({ kip37 }: props) => {
   } = useForm<FormData>()
 
   const mintToken = async () => {
-    console.log('kip37: ', kip37)
-    console.log('address: ', kaikasAddress)
     if (!kip37) {
       alert('Please connect your Kaikas wallet')
     } else {
@@ -39,12 +38,12 @@ const KIP37 = ({ kip37 }: props) => {
       const description = getValues('description')
       const image = getValues('image')
       const quantity = getValues('quantity')
-      const metadata = { name: name, description: description, image: image, quantity: quantity }
-      console.log('metadata: ', metadata)
-      if (!metadata.name || !metadata.description || !metadata.image || !metadata.quantity) {
+      if (!name || !description || !image || !quantity) {
         alert('Please do not leave any fields blank.')
         return
       }
+      const metadata = { name: name, description: description, image: image, quantity: quantity }
+      console.log('metadata: ', metadata)
       const { cid } = await client.add({ content: JSON.stringify(metadata) })
       const uri = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('token URI: ', uri)
@@ -58,6 +57,7 @@ const KIP37 = ({ kip37 }: props) => {
   const onFileUpload = async (e: any) => {
     const file = e.target.files[0]
     try {
+      setIsLoading(true)
       console.log(`adding ${file.name} to ipfs....`)
       const { cid } = await client.add(
         { content: file },
@@ -70,6 +70,7 @@ const KIP37 = ({ kip37 }: props) => {
       console.log('ipfs url: ', url)
       setImageURL(url)
       setValue('image', url)
+      setIsLoading(false)
     } catch (e) {
       console.error('Error uploading file: ', e)
     }
@@ -110,7 +111,9 @@ const KIP37 = ({ kip37 }: props) => {
         </div>
 
         {imageURL ? (
-          <img src={imageURL} width="400px" height="400px" />
+          <div className="flex justify-center">
+            <img src={imageURL} width="300px" height="300px" />
+          </div>
         ) : (
           <div className="flex items-center justify-center w-full mt-2">
             <label className="flex flex-col border-2 border-dashed border-gray-400 w-full rounded-lg h-32 group">
@@ -142,9 +145,11 @@ const KIP37 = ({ kip37 }: props) => {
             </label>
           </div>
         )}
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
+        {isLoading && (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        )}
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
             className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full"
