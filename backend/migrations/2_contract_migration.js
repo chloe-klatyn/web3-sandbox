@@ -1,8 +1,8 @@
 const fs = require("fs");
-var kip37Token = artifacts.require("KIP37");
+var kip37Token = artifacts.require("KIP37Token");
 
 module.exports = function (deployer) {
-  deployer.deploy(kip37Token, "KlaytnNFT").then(() => {
+  deployer.deploy(kip37Token).then(() => {
     // Record recently deployed contract address to 'deployedAddress' file.
     if (kip37Token._json) {
       fs.mkdir("../frontend/deployed", { recursive: true }, (err) => {

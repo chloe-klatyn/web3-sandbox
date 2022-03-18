@@ -137,10 +137,10 @@ const KIP17 = ({ kip17 }: props) => {
         )}
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
-            className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma"
+            className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full text-xs"
             onClick={handleSubmit(mintToken)}
           >
-            MINT KIP7 TOKEN
+            MINT KIP17 TOKEN
           </button>
         </div>
       </div>

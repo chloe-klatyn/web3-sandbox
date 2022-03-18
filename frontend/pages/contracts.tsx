@@ -7,7 +7,14 @@ import KIP17 from '../components/KIP17'
 import KIP37 from '../components/KIP37'
 import providerContext from '../context/context'
 
-const Contracts: NextPage = (contractData: any) => {
+const Contracts: NextPage = ({
+  kip7abi,
+  kip7address,
+  kip17abi,
+  kip17address,
+  kip37abi,
+  kip37address,
+}: any) => {
   const [currentContract, setCurrentContract] = useState('KIP7')
   const { web3, caver } = useContext(providerContext)
   const [kip7, setKip7] = useState()
@@ -15,19 +22,33 @@ const Contracts: NextPage = (contractData: any) => {
   const [kip37, setKip37] = useState()
 
   const instantiateKlayContracts = async () => {
-    const kip7Contract = new caver.klay.Contract(contractData.kip7abi, contractData.kip7address)
-    setKip7(kip7Contract)
-    const kip17Contract = new caver.klay.Contract(contractData.kip17abi, contractData.kip17address)
-    setKip17(kip17Contract)
-    // console.log('klay contract: ', kip7Contract)
+    if (kip7address && kip7abi) {
+      const kip7Contract = new caver.klay.Contract(kip7abi, kip7address)
+      setKip7(kip7Contract)
+    }
+    if (kip17address && kip17abi) {
+      const kip17Contract = new caver.klay.Contract(kip17abi, kip17address)
+      setKip17(kip17Contract)
+    }
+    if (kip37address && kip37abi) {
+      const kip37Contract = new caver.klay.Contract(kip37abi, kip37address)
+      setKip37(kip37Contract)
+    }
   }
 
   const instantiateEthContracts = async () => {
-    const kip7Contract = new web3.eth.Contract(contractData.kip7abi, contractData.kip7address)
-    setKip7(kip7Contract)
-    const kip17Contract = new web3.eth.Contract(contractData.kip17abi, contractData.kip17address)
-    setKip7(kip17Contract)
-    // console.log('eth contract: ', kip7Contract)
+    if (kip7address && kip7abi) {
+      const kip7Contract = new web3.eth.Contract(kip7abi, kip7address)
+      setKip7(kip7Contract)
+    }
+    if (kip17address && kip17abi) {
+      const kip17Contract = new web3.eth.Contract(kip17abi, kip17address)
+      setKip17(kip17Contract)
+    }
+    if (kip37address && kip37abi) {
+      const kip37Contract = new web3.eth.Contract(kip37abi, kip37address)
+      setKip37(kip37Contract)
+    }
   }
 
   useEffect(() => {

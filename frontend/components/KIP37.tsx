@@ -27,6 +27,7 @@ const KIP37 = ({ kip37 }: props) => {
     setValue,
     formState: { errors },
   } = useForm<FormData>()
+  console.log('kip37: ', kip37)
 
   const mintToken = async () => {
     console.log('kip37: ', kip37)
@@ -48,7 +49,7 @@ const KIP37 = ({ kip37 }: props) => {
       const uri = `https://ipfs.infura.io/ipfs/${cid}`
       console.log('token URI: ', uri)
       const mintTxn = await kip37.methods
-        .mintNFT(uri, quantity)
+        .mintToken(uri, quantity)
         .send({ from: kaikasAddress, gas: '0xF4240' })
       console.log('mint txn: ', mintTxn)
     }
@@ -139,10 +140,10 @@ const KIP37 = ({ kip37 }: props) => {
         )}
         <div className="flex items-center justify-center pt-5 pb-5">
           <button
-            className="bg-grey text-white tracking-widest font-header py-2 px-8 rounded-full text-xs hover:bg-magma"
+            className="bg-magma text-white tracking-widest font-header py-2 px-8 rounded-full text-xs"
             onClick={handleSubmit(mintToken)}
           >
-            MINT KIP7 TOKEN
+            MINT KIP37 TOKEN
           </button>
         </div>
       </div>

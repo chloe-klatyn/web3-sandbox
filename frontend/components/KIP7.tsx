@@ -29,7 +29,6 @@ const KIP7 = ({ kip7 }: props) => {
 
   const getWalletBalance = async () => {
     const userBalance = await kip7.methods.balanceOf(connectedAddress).call()
-    console.log('wallet balance: ', userBalance)
     setKip7Balance(userBalance)
   }
 
@@ -37,7 +36,6 @@ const KIP7 = ({ kip7 }: props) => {
     const name = await kip7.methods.name().call()
     const symbol = await kip7.methods.symbol().call()
     setTokenSymbol(symbol)
-    console.log('name: ', name, 'symbol:', symbol)
   }
 
   const transferTokens = async () => {
@@ -142,7 +140,7 @@ const KIP7 = ({ kip7 }: props) => {
             <div className="text-lightorange">Value is more than balance</div>
           )}
           <button
-            className="flex font-light items-center rounded-full bg-blue-600 px-4 py-2 text-white"
+            className="flex font-light items-center rounded-full bg-magma px-4 py-2 text-white"
             type="submit"
             onClick={handleSubmit(transferTokens)}
           >
