@@ -124,9 +124,9 @@ const Contracts: NextPage = ({
           </button>
         )}
       </div>
-      <div className="mt-20">{currentContract === 'KIP7' && <KIP7 kip7={kip7} />}</div>
-      <div className="mt-20">{currentContract === 'KIP17' && <KIP17 kip17={kip17} />}</div>
-      <div className="mt-20">{currentContract === 'KIP37' && <KIP37 kip37={kip37} />}</div>
+      <div className="mt-14">{currentContract === 'KIP7' && <KIP7 kip7={kip7} />}</div>
+      <div className="mt-14">{currentContract === 'KIP17' && <KIP17 kip17={kip17} />}</div>
+      <div className="mt-14">{currentContract === 'KIP37' && <KIP37 kip37={kip37} />}</div>
     </div>
   )
 }

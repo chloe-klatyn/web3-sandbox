@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const Subheader = () => {
-  const [active, setActive] = useState('contracts')
+  const [active, setActive] = useState('')
 
   return (
     <div className="flex place-content-center items-center text-gray-900 bg-gray-100 shadow">

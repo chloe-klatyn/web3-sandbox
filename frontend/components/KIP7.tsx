@@ -104,6 +104,7 @@ const KIP7 = ({ kip7 }: props) => {
         draggable
         pauseOnHover
       />
+      <div className="flex justify-center text-2xl mb-10">Transfer KIP7 Token</div>
       <div className="place-content-center font-body mb-6 tracking-widest shadow-md w-1/3 rounded-lg bg-gray-100">
         <div className="border-b-2 p-4 text-2xl flex place-content-between">
           {connectedAddress && kip7Balance && tokenSymbol ? (

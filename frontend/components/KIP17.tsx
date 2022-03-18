@@ -75,7 +75,7 @@ const KIP17 = ({ kip17 }: props) => {
   return (
     <div className="flex justify-center">
       <div className="space-y-6 w-1/4">
-        <div className="text-2xl font-bold flex justify-center">Mint KIP17 NFT</div>
+        <div className="flex justify-center text-2xl">Mint KIP17 NFT</div>
         <div className="grid grid-cols-1">
           <label className="md:text-sm text-xs text-gray-500 font-body tracking-wider">Name</label>
           <input
