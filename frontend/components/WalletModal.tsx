@@ -25,6 +25,7 @@ const WalletModal = (props: ModalProps) => {
     setWeb3,
     setCaver,
     setCurrentWallet,
+    setMetamaskCaver,
   } = useContext(providerContext)
 
   const connectKaikas = async () => {
@@ -50,6 +51,22 @@ const WalletModal = (props: ModalProps) => {
       setMetamaskAddress(account[0])
       let web3 = new Web3(ethProvider)
       setWeb3(web3)
+      props.setWalletModal(false)
+      setCurrentWallet('Metamask')
+      toast.success('Wallet Connected', { theme: 'colored' })
+    } catch (error: any) {
+      console.error(error.message)
+      toast.error(error.message, { theme: 'colored' })
+    }
+  }
+
+  const connectMetamaskWithCaver = async () => {
+    try {
+      const account = await ethProvider.request({ method: 'eth_requestAccounts' })
+      // console.log('account: ', account)
+      setMetamaskAddress(account[0])
+      const caver = new Caver(klaytnProvider)
+      setMetamaskCaver(caver)
       props.setWalletModal(false)
       setCurrentWallet('Metamask')
       toast.success('Wallet Connected', { theme: 'colored' })
@@ -111,7 +128,8 @@ const WalletModal = (props: ModalProps) => {
                   </div>
                   <div
                     className="hover:border-2 hover:border-slate-200 border-2 border-white cursor-pointer p-4 rounded-md flex justify-center"
-                    onClick={connectMetamask}
+                    // onClick={connectMetamask}
+                    onClick={connectMetamaskWithCaver}
                   >
                     <div>
                       <Image src={metamask} width="100px" height="100px" />

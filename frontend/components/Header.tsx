@@ -19,6 +19,7 @@ const Header = () => {
     metamaskAddress,
     kaikasAddress,
     currentWallet,
+    metamaskCaver,
     setKaikasAddress,
     setMetamaskAddress,
   } = useContext(providerContext)
@@ -36,6 +37,41 @@ const Header = () => {
       } else if (networkId === 8217) {
         setNetwork('Cypress')
       }
+    }
+  }
+
+  const initMetamaskWallet = async () => {
+    const status = ethProvider.isConnected()
+    setMetamaskConnected(status)
+  }
+
+  const getMetamaskBalance = async () => {
+    const balance = await web3.eth.getBalance(metamaskAddress)
+    if (balance) {
+      const ether = web3.utils.fromWei(balance, 'ether')
+      setMetamaskBalace(ether)
+    } else {
+      console.log('no balance')
+    }
+  }
+
+  const getKaikasBalance = async () => {
+    const balance = await caver.klay.getBalance(kaikasAddress)
+    if (balance) {
+      const klay = caver.utils.convertFromPeb(balance, 'KLAY')
+      setKaikasBalance(klay)
+    } else {
+      console.log('no balance')
+    }
+  }
+
+  const getMetamaskCaverBalance = async () => {
+    const balance = await metamaskCaver.klay.getBalance(metamaskAddress)
+    if (balance) {
+      const ether = metamaskCaver.utils.convertFromPeb(balance, 'KLAY')
+      setMetamaskBalace(ether)
+    } else {
+      console.log('no balance')
     }
   }
 
@@ -93,34 +129,11 @@ const Header = () => {
     }
   }
 
-  const initMetamaskWallet = async () => {
-    const status = ethProvider.isConnected()
-    setMetamaskConnected(status)
-  }
-
-  const getMetamaskBalance = async () => {
-    const account = ethProvider.selectedAddress
-    setMetamaskAddress(account)
-    const balance = await web3.eth.getBalance(account)
-    if (balance) {
-      const ether = web3.utils.fromWei(balance, 'ether')
-      setMetamaskBalace(ether)
-    } else {
-      console.log('no balance')
+  useEffect(() => {
+    if (metamaskCaver) {
+      getMetamaskCaverBalance()
     }
-  }
-
-  const getKaikasBalance = async () => {
-    const account = klaytnProvider.selectedAddress
-    setKaikasAddress(account)
-    const balance = await caver.klay.getBalance(account)
-    if (balance) {
-      const klay = caver.utils.convertFromPeb(balance, 'KLAY')
-      setKaikasBalance(klay)
-    } else {
-      console.log('no balance')
-    }
-  }
+  }, [metamaskCaver])
 
   useEffect(() => {
     if (ethProvider) {
