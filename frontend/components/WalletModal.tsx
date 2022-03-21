@@ -63,7 +63,6 @@ const WalletModal = (props: ModalProps) => {
   const connectMetamaskWithCaver = async () => {
     try {
       const account = await ethProvider.request({ method: 'eth_requestAccounts' })
-      // console.log('account: ', account)
       setMetamaskAddress(account[0])
       const caver = new Caver(klaytnProvider)
       setMetamaskCaver(caver)
